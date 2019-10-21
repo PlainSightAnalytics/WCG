@@ -1,0 +1,26 @@
+﻿CREATE TABLE [pnd].[user] (
+    [id]                    UNIQUEIDENTIFIER NULL,
+    [type]                  NVARCHAR (MAX)   NULL,
+    [updated_at]            NVARCHAR (MAX)   NULL,
+    [display]               NVARCHAR (MAX)   NULL,
+    [device_id]             UNIQUEIDENTIFIER NULL,
+    [impound_id]            UNIQUEIDENTIFIER NULL,
+    [traffic_centre_id]     UNIQUEIDENTIFIER NULL,
+    [email]                 VARCHAR (MAX)    NULL,
+    [id_number]             VARCHAR (MAX)    NULL,
+    [inactive_key]          VARCHAR (MAX)    NULL,
+    [inactive_display]      VARCHAR (MAX)    NULL,
+    [infrastructure_number] VARCHAR (MAX)    NULL,
+    [mobile_number]         VARCHAR (MAX)    NULL,
+    [name]                  VARCHAR (MAX)    NULL,
+    [password]              VARCHAR (MAX)    NULL,
+    [persal_number]         VARCHAR (MAX)    NULL,
+    [rank_key]              VARCHAR (MAX)    NULL,
+    [rank_display]          VARCHAR (MAX)    NULL,
+    [role_key]              VARCHAR (MAX)    NULL,
+    [role_display]          VARCHAR (MAX)    NULL,
+    [surname]               VARCHAR (MAX)    NULL,
+    [DeltaLogKey]           INT              DEFAULT ((-1)) NOT NULL,
+    [AuditKey]              INT              DEFAULT ((-1)) NOT NULL
+);
+

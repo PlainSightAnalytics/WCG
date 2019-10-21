@@ -1,0 +1,28 @@
+﻿CREATE TABLE [model].[Operation] (
+    [OperationKey]                     INT              NULL,
+    [Actual Start Time]                DATETIME         NULL,
+    [Actual Stop Time]                 DATETIME         NULL,
+    [Approval Comment]                 VARCHAR (1000)   NULL,
+    [Approval Date]                    DATETIME         NULL,
+    [ASOD Road Section]                VARCHAR (50)     NULL,
+    [Authorisation Date]               DATETIME         NULL,
+    [Briefing Done By]                 VARCHAR (50)     NULL,
+    [Cancellation Reason]              VARCHAR (100)    NULL,
+    [Completion Comment]               VARCHAR (1000)   NULL,
+    [Debriefing Done By]               VARCHAR (50)     NULL,
+    [Is District Safety Plan]          VARCHAR (3)      NULL,
+    [Is Road Safety Quality Survey]    VARCHAR (3)      NULL,
+    [Location]                         VARCHAR (100)    NULL,
+    [Operational Officer]              VARCHAR (100)    NULL,
+    [Operation Description]            VARCHAR (100)    NULL,
+    [Operation ID]                     UNIQUEIDENTIFIER NULL,
+    [Operation Status]                 VARCHAR (30)     NULL,
+    [Operation Sub Type]               VARCHAR (200)    NULL,
+    [Operation Type]                   VARCHAR (50)     NULL,
+    [Planned Start Time]               DATETIME         NULL,
+    [Planned Stop Time]                DATETIME         NULL,
+    [Planner]                          VARCHAR (100)    NULL,
+    [Sighting Vehicle Registration No] VARCHAR (20)     NULL,
+    [Traffic Centre]                   VARCHAR (50)     NULL
+);
+

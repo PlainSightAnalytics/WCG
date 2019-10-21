@@ -1,0 +1,27 @@
+﻿CREATE TABLE [dbo].[DimDriver] (
+    [DriverKey]         INT           IDENTITY (1, 1) NOT NULL,
+    [Country]           VARCHAR (50)  DEFAULT ('Unknown') NOT NULL,
+    [DateOfBirth]       DATE          NULL,
+    [Gender]            VARCHAR (10)  DEFAULT ('Unknown') NOT NULL,
+    [IDDocumentNo]      VARCHAR (30)  DEFAULT ('Unknown') NOT NULL,
+    [IDDocumentType]    VARCHAR (30)  DEFAULT ('Unknown') NOT NULL,
+    [Initials]          VARCHAR (5)   NULL,
+    [LicenseExpiryDate] DATE          NULL,
+    [LicenseFirstDate]  DATE          NULL,
+    [LicenseNumber]     VARCHAR (20)  DEFAULT ('Unknown') NOT NULL,
+    [LicenseType]       VARCHAR (50)  DEFAULT ('Unknown') NOT NULL,
+    [Surname]           VARCHAR (50)  DEFAULT ('Unknown') NOT NULL,
+    [RowIsCurrent]      CHAR (1)      DEFAULT ('Y') NOT NULL,
+    [RowIsInferred]     CHAR (1)      DEFAULT ('N') NOT NULL,
+    [RowStartDate]      DATETIME      DEFAULT ('1 Jan 1900') NOT NULL,
+    [RowEndDate]        DATETIME      DEFAULT ('31 Dec 9999') NOT NULL,
+    [RowChangeReason]   VARCHAR (200) DEFAULT ('New Row') NOT NULL,
+    [InsertAuditKey]    INT           DEFAULT ((-1)) NOT NULL,
+    [UpdateAuditKey]    INT           DEFAULT ((-1)) NOT NULL,
+    [DeltaLogKey]       INT           DEFAULT ((-1)) NOT NULL,
+    [ExceptionRowKey]   INT           DEFAULT ((-1)) NOT NULL,
+    CONSTRAINT [PK_dbo.DimDriver] PRIMARY KEY CLUSTERED ([DriverKey] ASC),
+    CONSTRAINT [FK_dbo_DimDriver_InsertAuditKey] FOREIGN KEY ([InsertAuditKey]) REFERENCES [dbo].[DimAudit] ([AuditKey]),
+    CONSTRAINT [FK_dbo_DimDriver_UpdateAuditKey] FOREIGN KEY ([UpdateAuditKey]) REFERENCES [dbo].[DimAudit] ([AuditKey])
+);
+

@@ -1,0 +1,28 @@
+﻿CREATE TABLE [dbo].[DimJourneyUser] (
+    [JourneyUserKey]       INT              IDENTITY (1, 1) NOT NULL,
+    [EmployeeNumber]       VARCHAR (30)     DEFAULT ('Unknown') NOT NULL,
+    [FirstName]            VARCHAR (30)     DEFAULT ('Unknown') NOT NULL,
+    [IDNumber]             VARCHAR (20)     DEFAULT ('Unknown') NOT NULL,
+    [InfrastructureNumber] VARCHAR (30)     DEFAULT ('Unknown') NOT NULL,
+    [IsActive]             VARCHAR (3)      DEFAULT ('No') NOT NULL,
+    [JourneyUserID]        UNIQUEIDENTIFIER NULL,
+    [MobileNo]             VARCHAR (20)     NULL,
+    [PoundFacility]        VARCHAR (50)     DEFAULT ('Unknown') NOT NULL,
+    [Rank]                 VARCHAR (30)     DEFAULT ('Unknown') NOT NULL,
+    [Role]                 VARCHAR (30)     DEFAULT ('Unknown') NOT NULL,
+    [Surname]              VARCHAR (50)     DEFAULT ('Unknown') NOT NULL,
+    [TrafficCentre]        VARCHAR (50)     DEFAULT ('Unknown') NOT NULL,
+    [RowIsCurrent]         CHAR (1)         DEFAULT ('Y') NOT NULL,
+    [RowIsInferred]        CHAR (1)         DEFAULT ('N') NOT NULL,
+    [RowStartDate]         DATETIME         DEFAULT ('1 Jan 1900') NOT NULL,
+    [RowEndDate]           DATETIME         DEFAULT ('31 Dec 9999') NOT NULL,
+    [RowChangeReason]      VARCHAR (200)    DEFAULT ('New Row') NOT NULL,
+    [InsertAuditKey]       INT              DEFAULT ((-1)) NOT NULL,
+    [UpdateAuditKey]       INT              DEFAULT ((-1)) NOT NULL,
+    [DeltaLogKey]          INT              DEFAULT ((-1)) NOT NULL,
+    [ExceptionRowKey]      INT              DEFAULT ((-1)) NOT NULL,
+    CONSTRAINT [PK_dbo.DimJourneyUser] PRIMARY KEY CLUSTERED ([JourneyUserKey] ASC),
+    CONSTRAINT [FK_dbo_DimJourneyUser_InsertAuditKey] FOREIGN KEY ([InsertAuditKey]) REFERENCES [dbo].[DimAudit] ([AuditKey]),
+    CONSTRAINT [FK_dbo_DimJourneyUser_UpdateAuditKey] FOREIGN KEY ([UpdateAuditKey]) REFERENCES [dbo].[DimAudit] ([AuditKey])
+);
+

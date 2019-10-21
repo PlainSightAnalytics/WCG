@@ -1,0 +1,255 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Name>WCG_DW</Name>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>4.1</ProjectVersion>
+    <ProjectGuid>{a84d945a-0ca2-44de-bfe0-35e68f99f356}</ProjectGuid>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql130DatabaseSchemaProvider</DSP>
+    <OutputType>Database</OutputType>
+    <RootPath>
+    </RootPath>
+    <RootNamespace>WCG_DW</RootNamespace>
+    <AssemblyName>WCG_DW</AssemblyName>
+    <ModelCollation>1033,CI</ModelCollation>
+    <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
+    <DeployToDatabase>True</DeployToDatabase>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetLanguage>CS</TargetLanguage>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SqlServerVerification>False</SqlServerVerification>
+    <IncludeCompositeObjects>True</IncludeCompositeObjects>
+    <TargetDatabaseSet>True</TargetDatabaseSet>
+    <DefaultCollation>SQL_Latin1_General_CP1_CI_AS</DefaultCollation>
+    <DefaultFilegroup>PRIMARY</DefaultFilegroup>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
+    <!-- Default to the v11.0 targets path if the targets file for the current VS version is not found -->
+    <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
+    <VisualStudioVersion Condition="'$(SSDTExists)' == ''">11.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Condition="'$(SQLDBExtensionsRefPath)' != ''" Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <ItemGroup>
+    <Folder Include="Properties" />
+    <Folder Include="dbo\" />
+    <Folder Include="dbo\Tables\" />
+    <Folder Include="model\" />
+    <Folder Include="model\Views\" />
+    <Folder Include="Security\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="dbo\Tables\FactImpoundEvents.sql" />
+    <Build Include="dbo\Tables\FactTrafficControlEvents.sql" />
+    <Build Include="dbo\Tables\FactFlaggedVehicleAlerts.sql" />
+    <Build Include="dbo\Tables\DimShift.sql" />
+    <Build Include="dbo\Tables\DimEBATDevice.sql" />
+    <Build Include="dbo\Tables\DimJourneyUser.sql" />
+    <Build Include="dbo\Tables\FactRoadSafetyEducationEvents.sql" />
+    <Build Include="dbo\Tables\ScriptMapping.sql" />
+    <Build Include="dbo\Tables\DimRoster.sql" />
+    <Build Include="dbo\Tables\FactShiftOutcomes.sql" />
+    <Build Include="dbo\Tables\DimDriver.sql" />
+    <Build Include="dbo\Tables\FactImpoundReleaseCosts.sql" />
+    <Build Include="dbo\Tables\DimAudit.sql" />
+    <Build Include="dbo\Tables\FactFreightTracking.sql" />
+    <Build Include="dbo\Tables\DimFlaggedVehicleTrip.sql" />
+    <Build Include="dbo\Tables\tempList.sql" />
+    <Build Include="dbo\Tables\DimGeoLocation.sql" />
+    <Build Include="dbo\Tables\DimEBATEvent.sql" />
+    <Build Include="dbo\Tables\FactAPPActuals.sql" />
+    <Build Include="dbo\Tables\DimPoundFacility.sql" />
+    <Build Include="dbo\Tables\DimShiftActivityType.sql" />
+    <Build Include="dbo\Tables\DimUser.sql" />
+    <Build Include="dbo\Tables\DimSection56Form.sql" />
+    <Build Include="dbo\Tables\DimAlertType.sql" />
+    <Build Include="dbo\Tables\FactShiftTasks.sql" />
+    <Build Include="dbo\Tables\FactSightings.sql" />
+    <Build Include="dbo\Tables\DimEBATRole.sql" />
+    <Build Include="dbo\Tables\DimMagistratesCourt.sql" />
+    <Build Include="dbo\Tables\DimImpoundInstruction.sql" />
+    <Build Include="dbo\Tables\DimOperation_WCG0099.sql" />
+    <Build Include="dbo\Tables\DimOperation.sql" />
+    <Build Include="dbo\Tables\DimTripFreight.sql" />
+    <Build Include="dbo\Tables\DimTrafficControlEvent_WCG0104.sql" />
+    <Build Include="dbo\Tables\DimCriticalOutcomeType.sql" />
+    <Build Include="dbo\Tables\FactImpoundRequests.sql" />
+    <Build Include="dbo\Tables\DimTrafficControlEvent.sql" />
+    <Build Include="dbo\Tables\DimHour.sql" />
+    <Build Include="dbo\Tables\FactSpeedProfiles.sql" />
+    <Build Include="dbo\Tables\FactSightingsSummary.sql" />
+    <Build Include="dbo\Tables\DimEBATRolePlayer.sql" />
+    <Build Include="dbo\Tables\DimOfficer.sql" />
+    <Build Include="dbo\Tables\FactEBATReport.sql" />
+    <Build Include="dbo\Tables\DimCamera.sql" />
+    <Build Include="dbo\Tables\FactShiftTimes.sql" />
+    <Build Include="dbo\Tables\DimVehicleType.sql" />
+    <Build Include="dbo\Tables\DimVehicle.sql" />
+    <Build Include="dbo\Tables\FactImpoundViolationCharges.sql" />
+    <Build Include="dbo\Tables\DimDevice.sql" />
+    <Build Include="dbo\Tables\DimDate.sql" />
+    <Build Include="dbo\Tables\DimShiftTime.sql" />
+    <Build Include="dbo\Tables\DimEBATIncident.sql" />
+    <Build Include="dbo\Tables\FactSightings_WCG0098.sql" />
+    <Build Include="dbo\Tables\DimTrip.sql" />
+    <Build Include="dbo\Tables\DimShiftWeek.sql" />
+    <Build Include="dbo\Tables\DimOperator.sql" />
+    <Build Include="dbo\Tables\FactEBATEventDuration.sql" />
+    <Build Include="dbo\Tables\FactTrafficControlEventOutcomes.sql" />
+    <Build Include="dbo\Tables\DimSpeedProfileBucket.sql" />
+    <Build Include="dbo\Tables\DimAPPTarget.sql" />
+    <Build Include="dbo\Tables\DimCamera_WCG0098.sql" />
+    <Build Include="dbo\Tables\DWColumns.sql" />
+    <Build Include="dbo\Tables\DWColumnValues.sql" />
+    <Build Include="dbo\Tables\StageColumnValues.sql" />
+    <Build Include="dbo\Tables\DimOperation_WCG0098.sql" />
+    <Build Include="dbo\Tables\SourceToTargetMapping.sql" />
+    <Build Include="dbo\Tables\DimRoadSafetyTopic.sql" />
+    <Build Include="dbo\Tables\FactAlerts_WCG0098.sql" />
+    <Build Include="dbo\Tables\DimShiftLocation.sql" />
+    <Build Include="dbo\Tables\FactOperationAssignments.sql" />
+    <Build Include="dbo\Tables\DimViolationCharge.sql" />
+    <Build Include="dbo\Tables\FactPlannedShifts.sql" />
+    <Build Include="dbo\Tables\FactAPPTargets.sql" />
+    <Build Include="dbo\Tables\DimModelTableLog.sql" />
+    <Build Include="dbo\Tables\FactAlertsSummary.sql" />
+    <Build Include="dbo\Tables\DimTime.sql" />
+    <Build Include="dbo\Tables\DimTrafficCentre.sql" />
+    <Build Include="dbo\Tables\DimShiftTask.sql" />
+    <Build Include="dbo\Tables\FactPlannedOperations.sql" />
+    <Build Include="dbo\Tables\FactShiftActivities.sql" />
+    <Build Include="dbo\Tables\DimDeltaLog.sql" />
+    <Build Include="dbo\Tables\DimExecutionLog.sql" />
+    <Build Include="dbo\Tables\FactTrafficContraventions.sql" />
+    <Build Include="dbo\Tables\FactAlerts.sql" />
+    <Build Include="model\Views\Last Known Location Shift.sql" />
+    <Build Include="model\Views\Last Known Location Shift Tasks.sql" />
+    <Build Include="model\Views\Geo Location.sql" />
+    <Build Include="model\Views\Critical Outcome Type.sql" />
+    <Build Include="model\Views\Hour.sql" />
+    <Build Include="model\Views\Violation Charge.sql" />
+    <Build Include="model\Views\Section 56 Form.sql" />
+    <Build Include="model\Views\_Public Transport Alerts.sql" />
+    <Build Include="model\Views\_Public Transport Sightings.sql" />
+    <Build Include="model\Views\_Public Transport Traffic Control Event Outcomes.sql" />
+    <Build Include="model\Views\Impound Instruction.sql" />
+    <Build Include="model\Views\Operation.sql" />
+    <Build Include="model\Views\_Impound Release Costs.sql" />
+    <Build Include="model\Views\APP Target.sql" />
+    <Build Include="model\Views\_Impound Events.sql" />
+    <Build Include="model\Views\Pound Facility.sql" />
+    <Build Include="model\Views\Journey User.sql" />
+    <Build Include="model\Views\_Operation Traffic Control Events.sql" />
+    <Build Include="model\Views\_Execution Log.sql" />
+    <Build Include="model\Views\Camera.sql" />
+    <Build Include="model\Views\_Transport Operation Events.sql" />
+    <Build Include="model\Views\Transport Operation Driver.sql" />
+    <Build Include="model\Views\Alert Type.sql" />
+    <Build Include="model\Views\Last Known Location.sql" />
+    <Build Include="model\Views\Device.sql" />
+    <Build Include="model\Views\EBAT Device.sql" />
+    <Build Include="model\Views\Impound Vehicle.sql" />
+    <Build Include="model\Views\Impound Traffic Control Event.sql" />
+    <Build Include="model\Views\Public Transport Vehicle.sql" />
+    <Build Include="model\Views\Public Transport Traffic Control Event.sql" />
+    <Build Include="model\Views\AuditLog.sql" />
+    <Build Include="model\Views\Traffic Centre User Email.sql" />
+    <Build Include="model\Views\Speed Profile Bucket.sql" />
+    <Build Include="model\Views\Trip Freight.sql" />
+    <Build Include="model\Views\_Freight Tracking.sql" />
+    <Build Include="model\Views\Freight Vehicle.sql" />
+    <Build Include="model\Views\Roster.sql" />
+    <Build Include="model\Views\_Planned Shifts.sql" />
+    <Build Include="model\Views\_Speed Profiles.sql" />
+    <Build Include="model\Views\KeyDatesEBAT.sql" />
+    <Build Include="model\Views\Road Safety Topic.sql" />
+    <Build Include="model\Views\Time.sql" />
+    <Build Include="model\Views\Camera Enhanced.sql" />
+    <Build Include="model\Views\Traffic Control Event.sql" />
+    <Build Include="model\Views\Driver.sql" />
+    <Build Include="model\Views\_Shift Outcomes.sql" />
+    <Build Include="model\Views\Traffic Centre.sql" />
+    <Build Include="model\Views\_EBAT Report.sql" />
+    <Build Include="model\Views\User.sql" />
+    <Build Include="model\Views\_Traffic Control Event Outcomes.sql" />
+    <Build Include="model\Views\_Traffic Control Events.sql" />
+    <Build Include="model\Views\_Impound Requests.sql" />
+    <Build Include="model\Views\_Road Safety Education Events.sql" />
+    <Build Include="model\Views\EBAT Event.sql" />
+    <Build Include="model\Views\Shift Task.sql" />
+    <Build Include="model\Views\EBAT Incident.sql" />
+    <Build Include="model\Views\_Shift Tasks.sql" />
+    <Build Include="model\Views\_CriminalOffences.sql" />
+    <Build Include="model\Views\Magistrates Court.sql" />
+    <Build Include="model\Views\Officer.sql" />
+    <Build Include="model\Views\Operator.sql" />
+    <Build Include="model\Views\_Alerts.sql" />
+    <Build Include="model\Views\_APP Actuals.sql" />
+    <Build Include="model\Views\_Sightings.sql" />
+    <Build Include="model\Views\Shift Week.sql" />
+    <Build Include="model\Views\Shift Time.sql" />
+    <Build Include="model\Views\Shift Location.sql" />
+    <Build Include="model\Views\EBAT Role.sql" />
+    <Build Include="model\Views\KeyDatesITIS.sql" />
+    <Build Include="model\Views\Shift Activity Type.sql" />
+    <Build Include="model\Views\EBAT Role Player.sql" />
+    <Build Include="model\Views\Shift.sql" />
+    <Build Include="model\Views\_Alerts Summary.sql" />
+    <Build Include="model\Views\_Sightings Summary.sql" />
+    <Build Include="model\Views\KeyDatesImpound.sql" />
+    <Build Include="model\Views\_APP Targets.sql" />
+    <Build Include="model\Views\KeyDatesCLE.sql" />
+    <Build Include="model\Views\_Traffic Contraventions.sql" />
+    <Build Include="model\Views\_Public Transport Traffic Control Events.sql" />
+    <Build Include="model\Views\DeltaLog.sql" />
+    <Build Include="model\Views\ExecutionLog.sql" />
+    <Build Include="model\Views\_Operation Sightings.sql" />
+    <Build Include="model\Views\_Operation Alerts.sql" />
+    <Build Include="model\Views\Transport Operation Vehicle.sql" />
+    <Build Include="model\Views\Transport Operation Traffic Control Event.sql" />
+    <Build Include="model\Views\Impound Driver.sql" />
+    <Build Include="model\Views\Public Transport Driver.sql" />
+    <Build Include="model\Views\_EBAT Event Duration.sql" />
+    <Build Include="model\Views\_Last Known Location.sql" />
+    <Build Include="model\Views\Speed Profiles.sql" />
+    <Build Include="model\Views\Date.sql" />
+    <Build Include="model\Views\_Planned Operations.sql" />
+    <Build Include="model\Views\_Impound Violation Charges.sql" />
+    <Build Include="model\Views\Trip.sql" />
+    <Build Include="model\Views\Vehicle Type.sql" />
+    <Build Include="model\Views\_Shift Activities.sql" />
+    <Build Include="model\Views\_Operation Assignments.sql" />
+    <Build Include="model\Views\_Shift Times.sql" />
+    <Build Include="Security\pbi_user.sql" />
+    <Build Include="Security\NT SERVICE_MSSQLServerOLAPService.sql" />
+    <Build Include="Security\ITIS_adm.bj.sql" />
+    <Build Include="Security\RoleMemberships.sql" />
+    <Build Include="Security\model.sql" />
+  </ItemGroup>
+</Project>

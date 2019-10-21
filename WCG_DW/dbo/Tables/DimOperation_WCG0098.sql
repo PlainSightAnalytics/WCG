@@ -1,0 +1,28 @@
+﻿CREATE TABLE [dbo].[DimOperation_WCG0098] (
+    [OperationKey]                  VARCHAR (8000) NULL,
+    [ActualStartTime]               VARCHAR (8000) NULL,
+    [ActualStopTime]                VARCHAR (8000) NULL,
+    [ApprovalComment]               VARCHAR (8000) NULL,
+    [ApprovalDate]                  VARCHAR (8000) NULL,
+    [ASODRoadSection]               VARCHAR (8000) NULL,
+    [AuthorisationDate]             VARCHAR (8000) NULL,
+    [BriefingDoneBy]                VARCHAR (8000) NULL,
+    [CancellationReason]            VARCHAR (8000) NULL,
+    [CompletionComment]             VARCHAR (8000) NULL,
+    [DebriefingDoneBy]              VARCHAR (8000) NULL,
+    [IsDistrictSafetyPlan]          VARCHAR (8000) NULL,
+    [IsRoadSafetyQualitySurvey]     VARCHAR (8000) NULL,
+    [Location]                      VARCHAR (8000) NULL,
+    [OperationalOfficer]            VARCHAR (8000) NULL,
+    [OperationDescription]          VARCHAR (8000) NULL,
+    [OperationID]                   VARCHAR (8000) NULL,
+    [OperationStatus]               VARCHAR (8000) NULL,
+    [OperationSubType]              VARCHAR (8000) NULL,
+    [OperationType]                 VARCHAR (8000) NULL,
+    [PlannedStartTime]              VARCHAR (8000) NULL,
+    [PlannedStopTime]               VARCHAR (8000) NULL,
+    [Planner]                       VARCHAR (8000) NULL,
+    [SightingVehicleRegistrationNo] VARCHAR (8000) NULL,
+    [TrafficCentre]                 VARCHAR (8000) NULL
+);
+

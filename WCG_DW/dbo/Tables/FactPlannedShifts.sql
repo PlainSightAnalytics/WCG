@@ -1,0 +1,27 @@
+﻿CREATE TABLE [dbo].[FactPlannedShifts] (
+    [RosterKey]        INT              DEFAULT ((-1)) NOT NULL,
+    [ShiftDateKey]     INT              DEFAULT ((-1)) NOT NULL,
+    [ShiftTimeKey]     INT              DEFAULT ((-1)) NOT NULL,
+    [ShiftWeekKey]     INT              DEFAULT ((-1)) NOT NULL,
+    [TrafficCentreKey] INT              DEFAULT ((-1)) NOT NULL,
+    [UserKey]          INT              DEFAULT ((-1)) NOT NULL,
+    [IsAcknowledged]   VARCHAR (3)      DEFAULT ('No') NULL,
+    [IsArchived]       VARCHAR (3)      DEFAULT ('No') NULL,
+    [IsDeleted]        VARCHAR (3)      DEFAULT ('No') NULL,
+    [IsUserShift]      VARCHAR (3)      DEFAULT ('No') NULL,
+    [ShiftGUID]        UNIQUEIDENTIFIER NULL,
+    [InsertAuditKey]   INT              DEFAULT ((-1)) NOT NULL,
+    [UpdateAuditKey]   INT              DEFAULT ((-1)) NOT NULL,
+    [DeltaLogKey]      INT              DEFAULT ((-1)) NOT NULL,
+    [ExceptionRowKey]  INT              DEFAULT ((-1)) NOT NULL,
+    [DeletedFlag]      INT              DEFAULT ((0)) NOT NULL,
+    CONSTRAINT [FK_dbo_FactPlannedShifts_InsertAuditKey] FOREIGN KEY ([InsertAuditKey]) REFERENCES [dbo].[DimAudit] ([AuditKey]),
+    CONSTRAINT [FK_dbo_FactPlannedShifts_RosterKey] FOREIGN KEY ([RosterKey]) REFERENCES [dbo].[DimRoster] ([RosterKey]),
+    CONSTRAINT [FK_dbo_FactPlannedShifts_ShiftDateKey] FOREIGN KEY ([ShiftDateKey]) REFERENCES [dbo].[DimDate] ([DateKey]),
+    CONSTRAINT [FK_dbo_FactPlannedShifts_ShiftTimeKey] FOREIGN KEY ([ShiftTimeKey]) REFERENCES [dbo].[DimShiftTime] ([ShiftTimeKey]),
+    CONSTRAINT [FK_dbo_FactPlannedShifts_ShiftWeekKey] FOREIGN KEY ([ShiftWeekKey]) REFERENCES [dbo].[DimShiftWeek] ([ShiftWeekKey]),
+    CONSTRAINT [FK_dbo_FactPlannedShifts_TrafficCentreKey] FOREIGN KEY ([TrafficCentreKey]) REFERENCES [dbo].[DimTrafficCentre] ([TrafficCentreKey]),
+    CONSTRAINT [FK_dbo_FactPlannedShifts_UpdateAuditKey] FOREIGN KEY ([UpdateAuditKey]) REFERENCES [dbo].[DimAudit] ([AuditKey]),
+    CONSTRAINT [FK_dbo_FactPlannedShifts_UserKey] FOREIGN KEY ([UserKey]) REFERENCES [dbo].[DimUser] ([UserKey])
+);
+

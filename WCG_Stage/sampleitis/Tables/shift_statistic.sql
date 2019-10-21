@@ -1,0 +1,26 @@
+﻿CREATE TABLE [sampleitis].[shift_statistic] (
+    [id]                                      UNIQUEIDENTIFIER NULL,
+    [type]                                    NVARCHAR (MAX)   NULL,
+    [updated_at]                              NVARCHAR (MAX)   NULL,
+    [display]                                 NVARCHAR (MAX)   NULL,
+    [admin_id]                                UNIQUEIDENTIFIER NULL,
+    [inspector_id]                            UNIQUEIDENTIFIER NULL,
+    [shift_id]                                UNIQUEIDENTIFIER NULL,
+    [superior_id]                             UNIQUEIDENTIFIER NULL,
+    [traffic_centre_id]                       UNIQUEIDENTIFIER NULL,
+    [completed_at]                            VARCHAR (MAX)    NULL,
+    [date]                                    VARCHAR (MAX)    NULL,
+    [manual_tle006]                           VARCHAR (MAX)    NULL,
+    [no_manual_section_56_statistics_key]     VARCHAR (MAX)    NULL,
+    [no_manual_section_56_statistics_display] VARCHAR (MAX)    NULL,
+    [opened_at]                               VARCHAR (MAX)    NULL,
+    [pedestrian_arrests]                      VARCHAR (MAX)    NULL,
+    [report_type_key]                         VARCHAR (MAX)    NULL,
+    [report_type_display]                     VARCHAR (MAX)    NULL,
+    [signature]                               VARCHAR (MAX)    NULL,
+    [status_key]                              VARCHAR (MAX)    NULL,
+    [status_display]                          VARCHAR (MAX)    NULL,
+    [DeltaLogKey]                             INT              DEFAULT ((-1)) NOT NULL,
+    [AuditKey]                                INT              DEFAULT ((-1)) NOT NULL
+);
+

@@ -1,0 +1,25 @@
+﻿CREATE TABLE [model].[_Operation Alerts] (
+    [AlertTypeKey]        INT          NOT NULL,
+    [CameraKey]           INT          NOT NULL,
+    [GeoLocationKey]      INT          NOT NULL,
+    [OperationsDateKey]   INT          NOT NULL,
+    [TrafficCentreKey]    INT          NOT NULL,
+    [UpdatedDateKey]      INT          NOT NULL,
+    [UpdatedTimeKey]      INT          NOT NULL,
+    [VehicleKey]          INT          NOT NULL,
+    [AlertRecordID]       VARCHAR (15) NULL,
+    [AlertStatus]         VARCHAR (50) NULL,
+    [SourceAlertID]       VARCHAR (32) NULL,
+    [SourceSystem]        VARCHAR (50) NULL,
+    [SpeedClassCode]      VARCHAR (30) NULL,
+    [VehicleCategory]     VARCHAR (50) NULL,
+    [VehicleCategoryCode] VARCHAR (30) NULL,
+    [VehicleUsage]        VARCHAR (50) NULL,
+    [VehicleUsageCode]    VARCHAR (30) NULL,
+    [AverageSpeed]        INT          NOT NULL,
+    [DurationAlert]       INT          NULL,
+    [DurationPrimary]     INT          NULL,
+    [SpeedLimit]          INT          NULL,
+    [OperationKey]        INT          NOT NULL
+);
+

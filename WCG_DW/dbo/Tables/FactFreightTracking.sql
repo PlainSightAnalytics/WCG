@@ -1,0 +1,27 @@
+﻿CREATE TABLE [dbo].[FactFreightTracking] (
+    [CameraKey]         INT           DEFAULT ((-1)) NOT NULL,
+    [DateKey]           INT           DEFAULT ((-1)) NOT NULL,
+    [GeoLocationKey]    INT           DEFAULT ((-1)) NOT NULL,
+    [OperationsDateKey] INT           DEFAULT ((-1)) NOT NULL,
+    [TimeKey]           INT           DEFAULT ((-1)) NOT NULL,
+    [TrafficCentreKey]  INT           DEFAULT ((-1)) NOT NULL,
+    [TripKey]           INT           DEFAULT ((-1)) NOT NULL,
+    [VehicleKey]        INT           DEFAULT ((-1)) NOT NULL,
+    [Event]             VARCHAR (100) NULL,
+    [InsertAuditKey]    INT           DEFAULT ((-1)) NOT NULL,
+    [UpdateAuditKey]    INT           DEFAULT ((-1)) NOT NULL,
+    [DeltaLogKey]       INT           DEFAULT ((-1)) NOT NULL,
+    [ExceptionRowKey]   INT           DEFAULT ((-1)) NOT NULL,
+    [DeletedFlag]       INT           DEFAULT ((0)) NOT NULL,
+    CONSTRAINT [FK_dbo_FactFreightTracking_CameraKey] FOREIGN KEY ([CameraKey]) REFERENCES [dbo].[DimCamera] ([CameraKey]),
+    CONSTRAINT [FK_dbo_FactFreightTracking_DateKey] FOREIGN KEY ([DateKey]) REFERENCES [dbo].[DimDate] ([DateKey]),
+    CONSTRAINT [FK_dbo_FactFreightTracking_GeoLocationKey] FOREIGN KEY ([GeoLocationKey]) REFERENCES [dbo].[DimGeoLocation] ([GeoLocationKey]),
+    CONSTRAINT [FK_dbo_FactFreightTracking_InsertAuditKey] FOREIGN KEY ([InsertAuditKey]) REFERENCES [dbo].[DimAudit] ([AuditKey]),
+    CONSTRAINT [FK_dbo_FactFreightTracking_OperationsDateKey] FOREIGN KEY ([OperationsDateKey]) REFERENCES [dbo].[DimDate] ([DateKey]),
+    CONSTRAINT [FK_dbo_FactFreightTracking_TimeKey] FOREIGN KEY ([TimeKey]) REFERENCES [dbo].[DimTime] ([TimeKey]),
+    CONSTRAINT [FK_dbo_FactFreightTracking_TrafficCentreKey] FOREIGN KEY ([TrafficCentreKey]) REFERENCES [dbo].[DimTrafficCentre] ([TrafficCentreKey]),
+    CONSTRAINT [FK_dbo_FactFreightTracking_TripKey] FOREIGN KEY ([TripKey]) REFERENCES [dbo].[DimTripFreight] ([TripKey]),
+    CONSTRAINT [FK_dbo_FactFreightTracking_UpdateAuditKey] FOREIGN KEY ([UpdateAuditKey]) REFERENCES [dbo].[DimAudit] ([AuditKey]),
+    CONSTRAINT [FK_dbo_FactFreightTracking_VehicleKey] FOREIGN KEY ([VehicleKey]) REFERENCES [dbo].[DimVehicle] ([VehicleKey])
+);
+
