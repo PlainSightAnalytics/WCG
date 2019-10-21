@@ -5,7 +5,7 @@
 
 
 
-CREATE VIEW [dbo].[LoadFactTrafficControlEvents] AS
+ALTER VIEW [dbo].[LoadFactTrafficControlEvents] AS
 
 --------------------------------------------------------------------------------------------------------------------------------------
 -- Author				:	Trevor Howe
@@ -27,6 +27,7 @@ CREATE VIEW [dbo].[LoadFactTrafficControlEvents] AS
 -- Modified By			:	Trevor Howe
 -- Modified On			:	19-10-2019
 -- Reason				:	Fix bug on foreign key to operations date (was still on OpenDate instead of OperationsDate)
+--							Second Line.
 --------------------------------------------------------------------------------------------------------------------------------------
 
 SELECT 
