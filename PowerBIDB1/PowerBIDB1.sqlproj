@@ -165,5 +165,12 @@
     <Build Include="Security\pbi_user_1.sql" />
     <Build Include="Security\RoleMemberships.sql" />
     <Build Include="Security\model.sql" />
+    <Build Include="model\Tables\Month.sql" />
+    <Build Include="model\Tables\_Monthly Traffic Control Events.sql" />
+    <Build Include="model\Tables\_Monthly Traffic Control Event Outcomes.sql" />
+    <Build Include="model\Tables\_Monthly Speed Profiles.sql" />
+    <Build Include="model\Tables\_Monthly Sightings.sql" />
+    <Build Include="model\Tables\_Monthly Fatigue Alerts.sql" />
+    <Build Include="model\Tables\_Monthly Alerts.sql" />
   </ItemGroup>
 </Project>
