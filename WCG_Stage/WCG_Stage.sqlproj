@@ -649,5 +649,6 @@
     <Build Include="Security\sampleebat.sql" />
     <Build Include="Security\sampleitis.sql" />
     <Build Include="Security\stage.sql" />
+    <Build Include="dbo\Views\LoadFactTrafficControlEvents_1.sql" />
   </ItemGroup>
 </Project>

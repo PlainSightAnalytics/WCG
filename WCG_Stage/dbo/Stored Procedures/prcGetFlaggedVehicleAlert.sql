@@ -10,9 +10,9 @@ CREATE PROCEDURE [dbo].[prcGetFlaggedVehicleAlert]
 -- Ouputs				:	None
 -- Test					:	prcGetFlaggedVehicleAlert -1
 --------------------------------------------------------------------------------------------------------------------------
--- Modified By			:   
--- Modified On			:   
--- Reason				:   
+-- Modified By			:   Trevor Howe
+-- Modified On			:	02-11-2019
+-- Reason				:   Changed values for alert_type_id and alert_type_id_short and added new field for priority
 --------------------------------------------------------------------------------------------------------------------------
 
 @UniqueId VARCHAR(50) OUTPUT,
@@ -31,8 +31,8 @@ SELECT @JsonString  = (
 	 'PowerBI'												AS source_system_id
 	,GETUTCDATE()											AS timestamp
 	,CAST(CAST(GETDATE() AS TIME) AS VARCHAR(5))			AS time_string
-	,'Operating Licence'									AS alert_type_id
-	,'OL'													AS alert_type_id_short
+	,'Fatigue'												AS alert_type_id
+	,'Fatigue'												AS alert_type_id_short
 	,'PowerBI - Operating Licence'							AS alert_type
 	,1														AS alert_status
 	,'New'													AS alert_status_description
@@ -94,10 +94,11 @@ SELECT @JsonString  = (
 		ELSE 
 			CONCAT(
 			'Flagged Vehicle - ',
-			FlagType,
+			FlagType,	
 			' Alert - ',
 			ISNULL(d1.RegistrationNo, d2.RegistrationNo))
 		END													AS comments_notes
+	,'3'													AS [priority]
 
 	/* Not Required but we have */
 	,f.SightingRecordID										AS sighting_id
