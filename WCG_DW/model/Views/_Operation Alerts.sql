@@ -40,7 +40,7 @@ WHERE
 AND o.OperationSubType <> 'ASOD'
 AND o.ActualStartTime IS NOT NULL
 AND o.ActualStopTime IS NOT NULL
-AND o.OperationStatus IN ('Closed', 'Completed and Approved')
+AND o.OperationStatus = 'Approved'
 )
 
 ,ASODOperationCTE AS (
@@ -58,7 +58,7 @@ WHERE
 AND o.OperationSubType = 'ASOD'
 AND o.ActualStartTime IS NOT NULL
 AND o.ActualStopTime IS NOT NULL
-AND o.OperationStatus IN ('Closed', 'Completed and Approved')
+AND o.OperationStatus = 'Approved'
 )
 
 ,OperationCTE AS (
