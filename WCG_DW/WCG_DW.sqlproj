@@ -251,5 +251,12 @@
     <Build Include="Security\ITIS_adm.bj.sql" />
     <Build Include="Security\RoleMemberships.sql" />
     <Build Include="Security\model.sql" />
+    <Build Include="model\Views\Month.sql" />
+    <Build Include="model\Views\_Monthly Traffic Control Events.sql" />
+    <Build Include="model\Views\_Monthly Traffic Control Event Outcomes.sql" />
+    <Build Include="model\Views\_Monthly Speed Profiles.sql" />
+    <Build Include="model\Views\_Monthly Sightings.sql" />
+    <Build Include="model\Views\_Monthly Fatigue Alerts.sql" />
+    <Build Include="model\Views\_Monthly Alerts.sql" />
   </ItemGroup>
 </Project>
