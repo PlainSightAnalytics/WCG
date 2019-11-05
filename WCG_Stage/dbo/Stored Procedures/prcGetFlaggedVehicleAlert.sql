@@ -31,8 +31,18 @@ SELECT @JsonString  = (
 	 'PowerBI'												AS source_system_id
 	,GETUTCDATE()											AS timestamp
 	,CAST(CAST(GETDATE() AS TIME) AS VARCHAR(5))			AS time_string
-	,'Fatigue'												AS alert_type_id
-	,'Fatigue'												AS alert_type_id_short
+	,CASE FlagType
+		WHEN 'Fatigue' THEN 'Fatigue'
+		WHEN 'Speed' THEN 'Speed'
+		WHEN 'Cloned' THEN 'Cloned Plates'
+		ELSE NULL
+	END														AS alert_type_id
+	,CASE FlagType
+		WHEN 'Fatigue' THEN 'Fatigue'
+		WHEN 'Speed' THEN 'Speed'
+		WHEN 'Cloned' THEN 'Cloned Plates'
+		ELSE NULL
+	END														AS alert_type_id_short
 	,'PowerBI - Operating Licence'							AS alert_type
 	,1														AS alert_status
 	,'New'													AS alert_status_description
