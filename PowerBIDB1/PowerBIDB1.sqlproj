@@ -172,5 +172,6 @@
     <Build Include="model\Tables\_Monthly Sightings.sql" />
     <Build Include="model\Tables\_Monthly Fatigue Alerts.sql" />
     <Build Include="model\Tables\_Monthly Alerts.sql" />
+    <Build Include="model\Tables\_Monthly Flagged Alerts.sql" />
   </ItemGroup>
 </Project>

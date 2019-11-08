@@ -258,5 +258,6 @@
     <Build Include="model\Views\_Monthly Sightings.sql" />
     <Build Include="model\Views\_Monthly Fatigue Alerts.sql" />
     <Build Include="model\Views\_Monthly Alerts.sql" />
+    <Build Include="model\Views\_Monthly Flagged Alerts.sql" />
   </ItemGroup>
 </Project>
