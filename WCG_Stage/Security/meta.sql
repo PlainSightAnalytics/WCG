@@ -1,5 +1,3 @@
-﻿CREATE SCHEMA [its]
+﻿CREATE SCHEMA [meta]
     AUTHORIZATION [dbo];
-
-
 
