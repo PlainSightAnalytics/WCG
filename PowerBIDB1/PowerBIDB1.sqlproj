@@ -173,5 +173,9 @@
     <Build Include="model\Tables\_Monthly Fatigue Alerts.sql" />
     <Build Include="model\Tables\_Monthly Alerts.sql" />
     <Build Include="model\Tables\_Monthly Flagged Alerts.sql" />
+    <Build Include="model\Tables\Last Known Location Shift Tasks.sql" />
+    <Build Include="model\Tables\Last Known Location Shift.sql" />
+    <Build Include="model\Tables\Device Event.sql" />
+    <Build Include="model\Tables\_Device History.sql" />
   </ItemGroup>
 </Project>
