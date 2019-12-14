@@ -65,6 +65,7 @@
     <Folder Include="dbo\Tables\" />
     <Folder Include="dbo\Views\" />
     <Folder Include="dbo\Stored Procedures\" />
+    <Folder Include="model\Views\" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="model\Tables\_Execution Log.sql" />
@@ -185,5 +186,7 @@
     <Build Include="dbo\Tables\VehicleSearch.sql" />
     <Build Include="dbo\Views\vwVehicleSearch.sql" />
     <Build Include="dbo\Stored Procedures\prcDropCreateVehicleSearchIndexes.sql" />
+    <Build Include="model\Tables\Object List.sql" />
+    <Build Include="model\Views\vwObjectList.sql" />
   </ItemGroup>
 </Project>
