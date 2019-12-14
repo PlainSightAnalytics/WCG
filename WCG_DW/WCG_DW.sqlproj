@@ -259,5 +259,9 @@
     <Build Include="model\Views\_Monthly Fatigue Alerts.sql" />
     <Build Include="model\Views\_Monthly Alerts.sql" />
     <Build Include="model\Views\_Monthly Flagged Alerts.sql" />
+    <Build Include="dbo\Tables\FactDeviceHistory_1.sql" />
+    <Build Include="dbo\Tables\DimDeviceEvent_1.sql" />
+    <Build Include="model\Views\Device Event_1.sql" />
+    <Build Include="model\Views\_Device History_1.sql" />
   </ItemGroup>
 </Project>
