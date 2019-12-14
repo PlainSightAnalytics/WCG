@@ -1,13 +1,15 @@
 ﻿
+
 CREATE VIEW [model].[Last Known Location]  AS 
 
 ------------------------------------------------------------------------------------------
 -- Author               :   Trevor Howe
 -- Date Created         :   2019-03-23
 -- Reason               :   Transform view for Last Known Location 
+------------------------------------------------------------------------------------------
 -- Modified By          :	Trevor Howe
--- Modified ON          :	23-08-2019
--- Reason               :	Changes to convert time zone to SA Time
+-- Modified ON          :	18-11-2019
+-- Reason               :	Chagned stage table from last_known_location to last_known_location_current
 ------------------------------------------------------------------------------------------
 
 
@@ -20,12 +22,12 @@ SELECT
 	,latitude
 	,longitude
 	,traffic_centre_id
-	,CAST(user_event_date AS DATETIMEOFFSET) AT TIME ZONE 'South Africa Standard Time' AS EventDateTime
+	,user_event_date AS EventDateTime
 	,CONCAT(user_name, ' ', user_surname) AS Officer
 	,user_id
 	,COUNT(1) OVER (PARTITION BY device_id) AS EventCount
 	,ROW_NUMBER() OVER (PARTITION BY device_id ORDER BY user_event_date DESC) AS RowSequence
-FROM WCG_Stage.itis.last_known_location l WITH (NOLOCK)
+FROM WCG_Stage.itis.last_known_location_current l WITH (NOLOCK)
 WHERE user_event_date <= GETUTCDATE()
 )
 
@@ -50,11 +52,7 @@ SELECT
 	,d.last_known_location_latitude								AS latitude
 	,d.last_known_location_longitude							AS longitude
 	,t.id														AS traffic_centre_id
-	,CAST(
-		ISNULL(
-			last_known_location_timestamp
-			,d.updated_at) AS DATETIMEOFFSET
-	 )	AT TIME ZONE 'South Africa Standard Time'				AS LastKnownLocationDateTime
+	,ISNULL(last_known_location_timestamp,d.updated_at)			AS LastKnownLocationDateTime
 	,CONCAT(u.name, ' ', u.surname)								AS Officer
 	,d.current_user_id											AS current_user_id	
 FROM WCG_Stage.itis.device d WITH (NOLOCK)
@@ -103,8 +101,8 @@ SELECT
 	,Longitude														AS Longitude
 	,CAST(t.TrafficCentre AS VARCHAR(50))							AS TrafficCentre
 	,CAST(m.Officer AS VARCHAR(100))								AS Officer										
-	,CAST(LastKnownLocationDate AS DATETIME)						AS LastKnownLocationDate
-	,CAST(DeviceLastUsedDate AS DATETIME)							AS DeviceLastUsedDate
+	,DATEADD(HOUR,2,LastKnownLocationDate)							AS LastKnownLocationDate
+	,DATEADD(HOUR,2,DeviceLastUsedDate)								AS DeviceLastUsedDate
 	,LastShiftStartTime												AS LastShiftStartTime
 	,LastShiftEndTime												AS LastShiftEndTime
 	,DurationSinceLastActivity										AS DurationSinceLastActivity
@@ -129,8 +127,8 @@ SELECT
 	,ISNULL(t.TrafficCentreKey,-1)									AS TrafficCentreKey
 	,ISNULL(u.UserKey,-1)											AS UserKey
 	,ISNULL(s.ShiftKey,-1)											AS ShiftKey
-	,CAST(FORMAT(LastKnownLocationDate,'yyyyMMdd') AS INT)			AS LastKnownLocationDateKey
-	,CAST(FORMAT(LastKnownLocationDate,'hhmm') AS INT)				AS LastKnownLocationTimeKey
+	,FORMAT(DATEADD(HOUR,2,LastKnownLocationDate),'yyyyMMdd')		AS LastKnownLocationDateKey
+	,FORMAT(DATEADD(HOUR,2,LastKnownLocationDate),'hhmm')			AS LastKnownLocationTimeKey
 	,ISNULL(EventCount,0)											AS EventCountLast48Hours
 FROM MainCTE m
 LEFT JOIN WCG_DW.dbo.DimDevice d WITH (NOLOCK) ON m.DeviceId = d.DeviceID

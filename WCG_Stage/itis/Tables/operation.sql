@@ -15,6 +15,9 @@
     [actual_operation_stop_time]   VARCHAR (MAX)    NULL,
     [approval_comment]             VARCHAR (MAX)    NULL,
     [approval_date]                VARCHAR (MAX)    NULL,
+    [archived_key]                 VARCHAR (MAX)    NULL,
+    [archived_display]             VARCHAR (MAX)    NULL,
+    [asod_road_sections_text]      VARCHAR (MAX)    NULL,
     [authorization_comment]        VARCHAR (MAX)    NULL,
     [authorization_date]           VARCHAR (MAX)    NULL,
     [close_local_ob_number]        VARCHAR (MAX)    NULL,
@@ -30,6 +33,7 @@
     [general_type_display]         VARCHAR (MAX)    NULL,
     [has_non_object_location]      VARCHAR (MAX)    NULL,
     [last_updated]                 VARCHAR (MAX)    NULL,
+    [location_object_names]        VARCHAR (MAX)    NULL,
     [open_local_ob_number]         VARCHAR (MAX)    NULL,
     [operation_document]           VARCHAR (MAX)    NULL,
     [other_location]               VARCHAR (MAX)    NULL,
@@ -49,4 +53,6 @@
     [DeltaLogKey]                  INT              DEFAULT ((-1)) NOT NULL,
     [AuditKey]                     INT              DEFAULT ((-1)) NOT NULL
 );
+
+
 

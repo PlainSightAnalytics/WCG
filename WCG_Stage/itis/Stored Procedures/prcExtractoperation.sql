@@ -3,16 +3,16 @@ CREATE PROCEDURE [itis].[prcExtractoperation]
 
 --------------------------------------------------------------------------------------------------------------------------------------
 -- Author				:	Generated from Model
--- Date Created			:	19-08-2019 07:13:46
+-- Date Created			:	09-11-2019 02:23:31
 -- Reason				:	Reads JSON file and inserts data into Stage table (operation)
 --------------------------------------------------------------------------------------------------------------------------------------
 -- Inputs				:	@FileName, @DeltaLogKey, @AuditKey
 -- Ouputs				:	@RowCountStage
--- Test					:	exec itis.prcExtractoperation 'D:\PSA\WCG\changes\WCG-0099 - Replace Actuals\operation.json'
+-- Test					:	exec itis.prcExtractoperation 'D:\PSA\WCG\changes\WCG-0120 - Geographical Location of Operations\sample\operation.json'
 --------------------------------------------------------------------------------------------------------------------------------------
--- Modified By			:	Trevor Howe
--- Modified On			:	14-09-2019
--- Reason				:	Added new fields and changed logic for road_block fields to cater for multiple values instead of single values
+-- Modified By	:
+-- Modified On	:
+-- Reason				:
 --------------------------------------------------------------------------------------------------------------------------------------
 
 @FileName NVARCHAR(MAX),
@@ -46,6 +46,9 @@ SET @sql = @sql + '[actual_operation_start_time], ' + CHAR(13)
 SET @sql = @sql + '[actual_operation_stop_time], ' + CHAR(13)
 SET @sql = @sql + '[approval_comment], ' + CHAR(13)
 SET @sql = @sql + '[approval_date], ' + CHAR(13)
+SET @sql = @sql + '[archived_key], ' + CHAR(13)
+SET @sql = @sql + '[archived_display], ' + CHAR(13)
+SET @sql = @sql + '[asod_road_sections_text], ' + CHAR(13)
 SET @sql = @sql + '[authorization_comment], ' + CHAR(13)
 SET @sql = @sql + '[authorization_date], ' + CHAR(13)
 SET @sql = @sql + '[close_local_ob_number], ' + CHAR(13)
@@ -61,6 +64,7 @@ SET @sql = @sql + '[general_type_key], ' + CHAR(13)
 SET @sql = @sql + '[general_type_display], ' + CHAR(13)
 SET @sql = @sql + '[has_non_object_location], ' + CHAR(13)
 SET @sql = @sql + '[last_updated], ' + CHAR(13)
+SET @sql = @sql + '[location_object_names], ' + CHAR(13)
 SET @sql = @sql + '[open_local_ob_number], ' + CHAR(13)
 SET @sql = @sql + '[operation_document], ' + CHAR(13)
 SET @sql = @sql + '[other_location], ' + CHAR(13)
@@ -99,6 +103,9 @@ SET @sql = @sql + '[actual_operation_start_time], ' + CHAR(13)
 SET @sql = @sql + '[actual_operation_stop_time], ' + CHAR(13)
 SET @sql = @sql + '[approval_comment], ' + CHAR(13)
 SET @sql = @sql + '[approval_date], ' + CHAR(13)
+SET @sql = @sql + '[archived_key], ' + CHAR(13)
+SET @sql = @sql + '[archived_display], ' + CHAR(13)
+SET @sql = @sql + '[asod_road_sections_text], ' + CHAR(13)
 SET @sql = @sql + '[authorization_comment], ' + CHAR(13)
 SET @sql = @sql + '[authorization_date], ' + CHAR(13)
 SET @sql = @sql + '[close_local_ob_number], ' + CHAR(13)
@@ -114,6 +121,7 @@ SET @sql = @sql + '[general_type_key], ' + CHAR(13)
 SET @sql = @sql + '[general_type_display], ' + CHAR(13)
 SET @sql = @sql + '[has_non_object_location], ' + CHAR(13)
 SET @sql = @sql + '[last_updated], ' + CHAR(13)
+SET @sql = @sql + '[location_object_names], ' + CHAR(13)
 SET @sql = @sql + '[open_local_ob_number], ' + CHAR(13)
 SET @sql = @sql + '[operation_document], ' + CHAR(13)
 SET @sql = @sql + '[other_location], ' + CHAR(13)
@@ -150,6 +158,9 @@ SET @sql = @sql + '[actual_operation_start_time] [varchar](max) ''$.actual_opera
 SET @sql = @sql + '[actual_operation_stop_time] [varchar](max) ''$.actual_operation_stop_time'',' + CHAR(13)
 SET @sql = @sql + '[approval_comment] [varchar](max) ''$.approval_comment'',' + CHAR(13)
 SET @sql = @sql + '[approval_date] [varchar](max) ''$.approval_date'',' + CHAR(13)
+SET @sql = @sql + '[archived_key] [varchar](max) ''$.archived.key'',' + CHAR(13)
+SET @sql = @sql + '[archived_display] [varchar](max) ''$.archived.display'',' + CHAR(13)
+SET @sql = @sql + '[asod_road_sections_text] [varchar](max) ''$.asod_road_sections_text'',' + CHAR(13)
 SET @sql = @sql + '[authorization_comment] [varchar](max) ''$.authorization_comment'',' + CHAR(13)
 SET @sql = @sql + '[authorization_date] [varchar](max) ''$.authorization_date'',' + CHAR(13)
 SET @sql = @sql + '[close_local_ob_number] [varchar](max) ''$.close_local_ob_number'',' + CHAR(13)
@@ -165,6 +176,7 @@ SET @sql = @sql + '[general_type_key] [varchar](max) ''$.general_type.key'',' + 
 SET @sql = @sql + '[general_type_display] [varchar](max) ''$.general_type.display'',' + CHAR(13)
 SET @sql = @sql + '[has_non_object_location] [varchar](max) ''$.has_non_object_location'',' + CHAR(13)
 SET @sql = @sql + '[last_updated] [varchar](max) ''$.last_updated'',' + CHAR(13)
+SET @sql = @sql + '[location_object_names] [varchar](max) ''$.location_object_names'',' + CHAR(13)
 SET @sql = @sql + '[open_local_ob_number] [varchar](max) ''$.open_local_ob_number'',' + CHAR(13)
 SET @sql = @sql + '[operation_document] [varchar](max) ''$.operation_document'',' + CHAR(13)
 SET @sql = @sql + '[other_location] [varchar](max) ''$.other_location'',' + CHAR(13)

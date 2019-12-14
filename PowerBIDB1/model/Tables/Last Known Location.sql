@@ -18,8 +18,11 @@
     [DeviceKey]                 INT              NOT NULL,
     [TrafficCentreKey]          INT              NOT NULL,
     [UserKey]                   INT              NOT NULL,
+    [ShiftKey]                  INT              NOT NULL,
     [LastKnownLocationDateKey]  NVARCHAR (4000)  NULL,
     [LastKnownLocationTimeKey]  NVARCHAR (4000)  NULL,
     [EventCountLast48Hours]     INT              NOT NULL
 );
+
+
 

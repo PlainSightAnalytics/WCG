@@ -3,12 +3,12 @@ CREATE PROCEDURE [itis].[prcExtractsite]
 
 --------------------------------------------------------------------------------------------------------------------------------------
 -- Author				:	Generated from Model
--- Date Created			:	02-05-2018 12:59:36
+-- Date Created			:	09-11-2019 02:23:39
 -- Reason				:	Reads JSON file and inserts data into Stage table (site)
 --------------------------------------------------------------------------------------------------------------------------------------
 -- Inputs				:	@FileName, @DeltaLogKey, @AuditKey
 -- Ouputs				:	@RowCountStage
--- Test					:	exec itis.prcExtractsite 'D:\PSA\TCE2\sample\site.json'
+-- Test					:	exec itis.prcExtractsite 'D:\PSA\WCG\changes\WCG-0120 - Geographical Location of Operations\sample\site.json'
 --------------------------------------------------------------------------------------------------------------------------------------
 -- Modified By	:
 -- Modified On	:
@@ -35,6 +35,12 @@ SET @sql = @sql + '[updated_at], ' + CHAR(13)
 SET @sql = @sql + '[display], ' + CHAR(13)
 --Insert Begin
 SET @sql = @sql + '[traffic_centre_id], ' + CHAR(13)
+SET @sql = @sql + '[end_gps_location_latitude], ' + CHAR(13)
+SET @sql = @sql + '[end_gps_location_longitude], ' + CHAR(13)
+SET @sql = @sql + '[end_gps_location_altitude], ' + CHAR(13)
+SET @sql = @sql + '[end_gps_location_horizontal_accuracy], ' + CHAR(13)
+SET @sql = @sql + '[end_gps_location_vertical_accuracy], ' + CHAR(13)
+SET @sql = @sql + '[end_gps_location_timestamp], ' + CHAR(13)
 SET @sql = @sql + '[gps_location_latitude], ' + CHAR(13)
 SET @sql = @sql + '[gps_location_longitude], ' + CHAR(13)
 SET @sql = @sql + '[gps_location_altitude], ' + CHAR(13)
@@ -60,6 +66,12 @@ SET @sql = @sql + '[type], ' + CHAR(13)
 SET @sql = @sql + '[updated_at], ' + CHAR(13)
 SET @sql = @sql + '[display], ' + CHAR(13)
 SET @sql = @sql + '[traffic_centre_id], ' + CHAR(13)
+SET @sql = @sql + '[end_gps_location_latitude], ' + CHAR(13)
+SET @sql = @sql + '[end_gps_location_longitude], ' + CHAR(13)
+SET @sql = @sql + '[end_gps_location_altitude], ' + CHAR(13)
+SET @sql = @sql + '[end_gps_location_horizontal_accuracy], ' + CHAR(13)
+SET @sql = @sql + '[end_gps_location_vertical_accuracy], ' + CHAR(13)
+SET @sql = @sql + '[end_gps_location_timestamp], ' + CHAR(13)
 SET @sql = @sql + '[gps_location_latitude], ' + CHAR(13)
 SET @sql = @sql + '[gps_location_longitude], ' + CHAR(13)
 SET @sql = @sql + '[gps_location_altitude], ' + CHAR(13)
@@ -84,6 +96,12 @@ SET @sql = @sql + '[type] [nvarchar](max) ''$.type'',' + CHAR(13)
 SET @sql = @sql + '[updated_at] [nvarchar](max) ''$.updated_at'',' + CHAR(13)
 SET @sql = @sql + '[display] [nvarchar](max) ''$.display'',' + CHAR(13)
 SET @sql = @sql + '[traffic_centre_id] [varchar](max) ''$.traffic_centre_id'',' + CHAR(13)
+SET @sql = @sql + '[end_gps_location_latitude] [varchar](max) ''$.end_gps_location.latitude'',' + CHAR(13)
+SET @sql = @sql + '[end_gps_location_longitude] [varchar](max) ''$.end_gps_location.longitude'',' + CHAR(13)
+SET @sql = @sql + '[end_gps_location_altitude] [varchar](max) ''$.end_gps_location.altitude'',' + CHAR(13)
+SET @sql = @sql + '[end_gps_location_horizontal_accuracy] [varchar](max) ''$.end_gps_location.horizontal_accuracy'',' + CHAR(13)
+SET @sql = @sql + '[end_gps_location_vertical_accuracy] [varchar](max) ''$.end_gps_location.vertical_accuracy'',' + CHAR(13)
+SET @sql = @sql + '[end_gps_location_timestamp] [varchar](max) ''$.end_gps_location.timestamp'',' + CHAR(13)
 SET @sql = @sql + '[gps_location_latitude] [varchar](max) ''$.gps_location.latitude'',' + CHAR(13)
 SET @sql = @sql + '[gps_location_longitude] [varchar](max) ''$.gps_location.longitude'',' + CHAR(13)
 SET @sql = @sql + '[gps_location_altitude] [varchar](max) ''$.gps_location.altitude'',' + CHAR(13)
