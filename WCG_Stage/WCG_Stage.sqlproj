@@ -504,5 +504,16 @@
     <Build Include="itis\Stored Procedures\prcExtractlast_known_location_current_2.sql" />
     <Build Include="dbo\Stored Procedures\prcLoadFactDeviceHistory_2.sql" />
     <Build Include="dbo\Stored Procedures\prcLoadDimDeviceEvent_2.sql" />
+    <Build Include="man\Tables\CameraLocations.sql" />
+    <Build Include="itis\Tables\operation_location_join_1.sql" />
+    <Build Include="itis\Tables\operation_asod_road_section_join_1.sql" />
+    <Build Include="dbo\Tables\conformDimGeographicalLocation.sql" />
+    <Build Include="man\Views\transformDimGeographicalLocationCameraLocation.sql" />
+    <Build Include="itis\Views\transformDimGeographicalLocationSite.sql" />
+    <Build Include="itis\Views\transformDimGeographicalLocationEvent.sql" />
+    <Build Include="cle\Views\transformDimGeographicalLocationSightings.sql" />
+    <Build Include="itis\Stored Procedures\prcExtractoperation_location_join_1.sql" />
+    <Build Include="itis\Stored Procedures\prcExtractoperation_asod_road_section_join_1.sql" />
+    <Build Include="dbo\Stored Procedures\prcLoadDimGeographicalLocation.sql" />
   </ItemGroup>
 </Project>
