@@ -264,5 +264,6 @@
     <Build Include="model\Views\Device Event_2.sql" />
     <Build Include="model\Views\_Device History_2.sql" />
     <Build Include="dbo\Tables\DimGeographicalLocation.sql" />
+    <Build Include="dbo\Tables\VehicleSearch.sql" />
   </ItemGroup>
 </Project>
