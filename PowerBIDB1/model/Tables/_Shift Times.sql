@@ -1,4 +1,5 @@
 ﻿CREATE TABLE [model].[_Shift Times] (
+    [DeviceKey]         INT              NOT NULL,
     [OperationsDateKey] INT              NOT NULL,
     [RosterKey]         INT              NOT NULL,
     [ShiftDateKey]      INT              NOT NULL,
@@ -14,4 +15,6 @@
     [Unique ID]         UNIQUEIDENTIFIER NULL,
     [_DurationHours]    NUMERIC (5, 2)   NULL
 );
+
+
 
