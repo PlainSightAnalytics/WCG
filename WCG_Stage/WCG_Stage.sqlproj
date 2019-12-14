@@ -494,5 +494,15 @@
     <Build Include="dbo\Stored Procedures\prcLoadVehicleSearch.sql" />
     <Build Include="dbo\Stored Procedures\prcGetHighWaterMarkSightingsSlice.sql" />
     <Build Include="dbo\Stored Procedures\prcGetHighWaterMarkAlertsSlice.sql" />
+    <Build Include="itis\Tables\transformLastKnownLocation_2.sql" />
+    <Build Include="itis\Tables\last_known_location_current_2.sql" />
+    <Build Include="itis\Tables\FactDeviceHistory_2.sql" />
+    <Build Include="itis\Views\transformFactDeviceHistory_2.sql" />
+    <Build Include="itis\Views\transformDimDeviceEvent_2.sql" />
+    <Build Include="dbo\Views\LoadFactDeviceHistory_2.sql" />
+    <Build Include="itis\Stored Procedures\prcExtractlast_known_location_history_1.sql" />
+    <Build Include="itis\Stored Procedures\prcExtractlast_known_location_current_2.sql" />
+    <Build Include="dbo\Stored Procedures\prcLoadFactDeviceHistory_2.sql" />
+    <Build Include="dbo\Stored Procedures\prcLoadDimDeviceEvent_2.sql" />
   </ItemGroup>
 </Project>
