@@ -7,6 +7,7 @@
 
 
 
+
 CREATE VIEW [itis].[transformFactShiftActivities] AS
 
 --------------------------------------------------------------------------------------------------------------------------------------
@@ -17,6 +18,10 @@ CREATE VIEW [itis].[transformFactShiftActivities] AS
 -- Modified By			:	Trevor Howe
 -- Modified On			:	19-07-2019
 -- Reason				:	Added Operations Date field (Operations day starts at 6am and ends before 6am the following day)
+----------------------------------------------------------------------------------------------------------------------------------------
+-- Modified By			:	Trevor Howe
+-- Modified On			:	12-12-2019
+-- Reason				:	Fixed conversion issues with start and end time (time field contains text characters)
 ----------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -51,11 +56,13 @@ LEFT JOIN itis.roster_week rw WITH (NOLOCK) ON r.roster_week_id = rw.id
 SELECT
 	 CAST(a.comments AS VARCHAR(100))					AS ActivityComment
 	,CASE
-		WHEN a.end_time like '%Nan%' THEN NULL
+		--WHEN a.end_time like '%Nan%' THEN NULL
+		WHEN ISDATE(a.end_time) = 0 THEN NULL
 		ELSE CAST(a.end_time AS TIME)
 	END													AS ActivityEndTime
 	,CASE
-		WHEN a.start_time LIKE '%Nan%' THEN NULL
+		--WHEN a.start_time LIKE '%Nan%' THEN NULL
+		WHEN ISDATE(a.start_time) = 0 THEN NULL
 		ELSE CAST(a.start_time AS TIME)							
 	END													AS ActivityStartTime
 	,CAST(ISNULL(a.adhoc_display,'No') AS VARCHAR(3))	AS IsAdhocActivity
