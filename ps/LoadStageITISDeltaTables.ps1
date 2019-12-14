@@ -62,6 +62,7 @@ Try
         ,"event"
         ,"event_road_safety_topic"
         ,"impound_request"
+        ,"last_known_location"
         ,"officials_involved_in_operation"
         ,"operation"
         ,"section56_form"

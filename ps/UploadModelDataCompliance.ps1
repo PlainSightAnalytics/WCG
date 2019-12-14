@@ -1,8 +1,8 @@
 ﻿<# 
-Script:  UploadModelData.ps1
-Purpose: Uploads model data to Model Server and Database
+Script:  UploadModelDataCompliance.ps1
+Purpose: Uploads model data for Compliance to Model Server and Database
 Author:  Trevor Howe
-Date:    17-03-2017
+Date:    04-11-2019
 #>
 
 
@@ -10,8 +10,7 @@ Date:    17-03-2017
 $schemaname = "model"
 $executionlogkey = 0
 $scriptname =  $script:MyInvocation.MyCommand.Path
-$DeltaLogKey = 0
-$LogKey = 0
+$MaxCalendarYearMonthKey = (Get-Date).AddMonths(-1).ToString('yyyyMM')
 
 Try 
 {
@@ -52,57 +51,16 @@ Try
 
     # Declare model tables to be copied - flush and load
     $modeltables = @(
-                     "APP Target"
-                    ,"Critical Outcome Type"
-                    ,"Device"
-                    ,"Device Event"
-                    ,"Impound Driver"
-                    ,"Impound Instruction"
-                    ,"Impound Traffic Control Event"
-                    ,"Impound Vehicle"
-                    ,"Journey User"
-                    ,"Operation"
-                    ,"Pound Facility"
-                    ,"Road Safety Topic"
-                    ,"Roster"
-                    ,"Section 56 Form"
-                    ,"Shift Activity Type"
-                    ,"Shift Location"
-                    ,"Shift Task"
-                    ,"Shift Time"
-                    ,"Shift Week"
-                    ,"Shift"
-                    ,"Traffic Centre User Email"
-                    ,"Traffic Centre"
-                    ,"Traffic Control Event"
-                    ,"Transport Operation Driver"
-                    ,"Transport Operation Vehicle"
-                    ,"Transport Operation Traffic Control Event"
-                    ,"User"
-                    ,"Vehicle Type"
+                     "Vehicle Type"
+                    ,"Alert Type"
+                    ,"Camera"
+                    ,"Month"
+                    ,"Speed Profile Bucket"
                     ,"Violation Charge"
-                    ,"_APP Actuals"
-                    ,"_APP Targets"
-                    ,"_Impound Events"
-                    ,"_Impound Release Costs"
-                    ,"_Impound Requests"
-                    ,"_Impound Violation Charges"
-                    ,"_Operation Assignments"
-                    ,"_Operation Traffic Control Events"
-                    ,"_Planned Shifts"
-                    ,"_Planned Operations"
-                    ,"_Road Safety Education Events"
-                    ,"_Shift Activities"
-                    ,"_Shift Outcomes"
-                    ,"_Shift Tasks"
-                    ,"_Shift Times"
-                     "_Transport Operation Events"
-                    ,"KeyDatesITIS"
-                    ,"KeyDatesImpound"
                    )
 
     foreach ($modeltable in $modeltables) {
-        
+
         # Log Start of Delete
         $SqlCmd.CommandText = "WCG_Stage.dbo.prcInsertDimModelTableLog"
         $SqlCmd.Parameters.Clear()
@@ -117,8 +75,7 @@ Try
         # Setup SQL Command for table delete
         $DestinationSQLCmd = New-Object System.Data.SqlClient.SqlCommand
         $DestinationSQLCmd.Connection = $DestinationConnection
-        #$DestinationSQLCmd.CommandText = "DELETE FROM [" + $schemaname + "].[" + $modeltable + "]"
-        $DestinationSQLCmd.CommandText = "TRUNCATE TABLE [" + $schemaname + "].[" + $modeltable + "]"
+        $DestinationSQLCmd.CommandText = "DELETE FROM [" + $schemaname + "].[" + $modeltable + "]"
         $DestinationSQLCmd.CommandTimeout = 0
         $DestinationSQLCmd.ExecuteNonQuery()
 
@@ -165,100 +122,73 @@ Try
 
     # Declare model tables to be copied - replace most recent deltas
     $modeltables = @(
-                     "_Traffic Control Events"
-                    ,"_Traffic Control Event Outcomes"
-                    ,"_Device History"
+                     "_Monthly Flagged Alerts"
+                    ,"_Monthly Alerts"
+                    ,"_Monthly Sightings"
+                    ,"_Monthly Traffic Control Events"
+                    ,"_Monthly Traffic Control Event Outcomes"
+                    ,"_Monthly Speed Profiles"
                    )
 
     foreach ($modeltable in $modeltables) {
 
-        # Log Start of Earliest Delta
+
+        # Log Start of Delete
         $SqlCmd.CommandText = "WCG_Stage.dbo.prcInsertDimModelTableLog"
         $SqlCmd.Parameters.Clear()
         $SqlCmd.Parameters.AddWithValue("@ModelTable",$modeltable)
-        $SqlCmd.Parameters.AddWithValue("@Action","EARLIEST DELTA")
+        $SqlCmd.Parameters.AddWithValue("@Action","DELETE")
         $SqlCmd.Parameters.AddWithValue("@ExecutionLogKey",$ExecutionLogKey)
         $OutputParm = $SQLCmd.Parameters.AddWithValue("@LogKey",$LogKey)
         $OutputParm.Direction = 'Output'
         $SqlCmd.ExecuteNonQuery()
         $LogKey = $OutputParm.Value
 
-        # Get starting Delta 
-        $Sqlcmd.CommandType = [System.Data.CommandType]'StoredProcedure'
-        $SqlCmd.CommandText = "WCG_Stage.dbo.prcGetEarliestDelta"
-        $SqlCmd.Parameters.Clear()
-        $SqlCmd.Parameters.AddWithValue("@ModelTable",$modeltable)
-        $SqlCmd.Parameters.AddWithValue("@LagDays",7)
-        $OutputParm = $SQLCmd.Parameters.AddWithValue("@DeltaLogKey",$DeltaLogKey)
-        $OutputParm.Direction = 'Output'
-        $SqlCmd.ExecuteNonQuery()
-        $DeltaLogKey = $OutputParm.Value
-
-        # Log End of Earliest Delta 
+        # Setup SQL Command for table delete
+        $DestinationSQLCmd = New-Object System.Data.SqlClient.SqlCommand
+        $DestinationSQLCmd.Connection = $DestinationConnection
+        $DestinationSQLCmd.CommandText = "DELETE FROM [" + $schemaname + "].[" + $modeltable + "] WHERE CalendarYearMonthKey >= " + $MaxCalendarYearMonthKey
+        $DestinationSQLCmd.CommandTimeout = 0
+        $DestinationSQLCmd.ExecuteNonQuery()
+            
+        # Log End of Delete 
         $SqlCmd.CommandText = "WCG_Stage.dbo.prcUpdateDimModelTableLog"
         $SqlCmd.Parameters.Clear()
         $SqlCmd.Parameters.AddWithValue("@LogKey",$LogKey)
         $SqlCmd.ExecuteNonQuery()
 
-        If ($DeltaLogKey -gt 0)
-        {
+        # Log Start of Bulk Copy
+        $SqlCmd.CommandText = "WCG_Stage.dbo.prcInsertDimModelTableLog"
+        $SqlCmd.Parameters.Clear()
+        $SqlCmd.Parameters.AddWithValue("@ModelTable",$modeltable)
+        $SqlCmd.Parameters.AddWithValue("@Action","BULK COPY")
+        $SqlCmd.Parameters.AddWithValue("@ExecutionLogKey",$ExecutionLogKey)
+        $OutputParm = $SQLCmd.Parameters.AddWithValue("@LogKey",$LogKey)
+        $OutputParm.Direction = 'Output'
+        $SqlCmd.ExecuteNonQuery()
+        $LogKey = $OutputParm.Value
 
-            # Log Start of Delete
-            $SqlCmd.CommandText = "WCG_Stage.dbo.prcInsertDimModelTableLog"
-            $SqlCmd.Parameters.Clear()
-            $SqlCmd.Parameters.AddWithValue("@ModelTable",$modeltable)
-            $SqlCmd.Parameters.AddWithValue("@Action","DELETE")
-            $SqlCmd.Parameters.AddWithValue("@ExecutionLogKey",$ExecutionLogKey)
-            $OutputParm = $SQLCmd.Parameters.AddWithValue("@LogKey",$LogKey)
-            $OutputParm.Direction = 'Output'
-            $SqlCmd.ExecuteNonQuery()
-            $LogKey = $OutputParm.Value
+        # SQL Command for table select
+        $SourceSQLCmd.CommandType = [System.Data.CommandType]'Text'
+        $SourceSQLCmd.CommandText = "SELECT * FROM [" + $schemaname + "].[" + $modeltable + "] WHERE CalendarYearMonthKey = " + $MaxCalendarYearMonthKey
 
-            # Setup SQL Command for table delete
-            $DestinationSQLCmd = New-Object System.Data.SqlClient.SqlCommand
-            $DestinationSQLCmd.Connection = $DestinationConnection
-            $DestinationSQLCmd.CommandText = "DELETE FROM [" + $schemaname + "].[" + $modeltable + "] WHERE DeltaLogKey >= " + $DeltaLogKey.ToString()
-            $DestinationSQLCmd.CommandTimeout = 0
-            $DestinationSQLCmd.ExecuteNonQuery()
-
-            # Log End of Delete 
-            $SqlCmd.CommandText = "WCG_Stage.dbo.prcUpdateDimModelTableLog"
-            $SqlCmd.Parameters.Clear()
-            $SqlCmd.Parameters.AddWithValue("@LogKey",$LogKey)
-            $SqlCmd.ExecuteNonQuery()
-
-            # Log Start of Bulk Copy
-            $SqlCmd.CommandText = "WCG_Stage.dbo.prcInsertDimModelTableLog"
-            $SqlCmd.Parameters.Clear()
-            $SqlCmd.Parameters.AddWithValue("@ModelTable",$modeltable)
-            $SqlCmd.Parameters.AddWithValue("@Action","BULK COPY")
-            $SqlCmd.Parameters.AddWithValue("@ExecutionLogKey",$ExecutionLogKey)
-            $OutputParm = $SQLCmd.Parameters.AddWithValue("@LogKey",$LogKey)
-            $OutputParm.Direction = 'Output'
-            $SqlCmd.ExecuteNonQuery()
-            $LogKey = $OutputParm.Value
-
-            # SQL Command for table select
-            $SourceSQLCmd.CommandType = [System.Data.CommandType]'Text'
-            $SourceSQLCmd.CommandText = "SELECT * FROM [" + $schemaname + "].[" + $modeltable + "] WHERE DeltaLogKey >= " + $DeltaLogKey.ToString()
-
-            # Get source data
-            [System.Data.SqlClient.SqlDataReader] $SqlReader = $SourceSQLCmd.ExecuteReader()
+        # Get source data
+        [System.Data.SqlClient.SqlDataReader] $SqlReader = $SourceSQLCmd.ExecuteReader()
     
-            # Bulk copy to destination
-            $bulkCopy = New-Object Data.SqlClient.SqlBulkCopy($DestinationConnection)
+        # Bulk copy to destination
+        $bulkCopy = New-Object Data.SqlClient.SqlBulkCopy($DestinationConnection)
         
-            $bulkCopy.DestinationTableName = "[" + $schemaname + "].[" + $modeltable + "]"
-            $bulkcopy.BulkCopyTimeout = 0
-            $bulkCopy.WriteToServer($SqlReader)
-            $SqlReader.Close()
+        $bulkCopy.DestinationTableName = "[" + $schemaname + "].[" + $modeltable + "]"
+        $bulkcopy.BulkCopyTimeout = 0
+        $bulkCopy.WriteToServer($SqlReader)
+        $SqlReader.Close()
 
-            # Log End of Bulk Copy 
-            $SqlCmd.CommandText = "WCG_Stage.dbo.prcUpdateDimModelTableLog"
-            $SqlCmd.Parameters.Clear()
-            $SqlCmd.Parameters.AddWithValue("@LogKey",$LogKey)
-            $SqlCmd.ExecuteNonQuery()
-        }
+        # Log End of Bulk Copy 
+        $SqlCmd.CommandText = "WCG_Stage.dbo.prcUpdateDimModelTableLog"
+        $SqlCmd.Parameters.Clear()
+        $SqlCmd.Parameters.AddWithValue("@LogKey",$LogKey)
+        $SqlCmd.ExecuteNonQuery()
+        
 
     }
 

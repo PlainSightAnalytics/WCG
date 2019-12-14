@@ -97,6 +97,7 @@ Try
     Invoke-Expression ($ScriptFolder + "LoadFactShiftOutcomes.ps1")
     Invoke-Expression ($ScriptFolder + "LoadFactShiftTasks.ps1")
     Invoke-Expression ($ScriptFolder + "LoadFactShiftTimes.ps1")
+    Invoke-Expression ($ScriptFolder + "LoadFactDeviceHistory.ps1")
 
     # Load Impound Facts
     Invoke-Expression ($ScriptFolder + "LoadFactImpoundEvents.ps1")
@@ -109,7 +110,7 @@ Try
     # Refresh Datasets via API
     Invoke-Expression ($ScriptFolder + "RefreshDatasetENFORCE.ps1")
     Invoke-Expression ($ScriptFolder + "RefreshDatasetImpoundment.ps1")
-    #Invoke-Expression ($ScriptFolder + "RefreshDatasetTransportOperations.ps1")
+    Invoke-Expression ($ScriptFolder + "RefreshDatasetTransportOperations.ps1")
 
     # Upload Logs
     Invoke-Expression ($ScriptFolder + "UploadLogs.ps1")
