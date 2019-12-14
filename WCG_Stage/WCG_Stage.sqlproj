@@ -484,5 +484,15 @@
     <Build Include="Security\sampleitis.sql" />
     <Build Include="Security\stage.sql" />
     <Build Include="dbo\Views\LoadFactTrafficControlEvents_1.sql" />
+    <Build Include="cle\Tables\SightingsSlice.sql" />
+    <Build Include="cle\Tables\AlertsSlice.sql" />
+    <Build Include="dbo\Views\VehicleSearchStage.sql" />
+    <Build Include="dbo\Stored Procedures\prcUpdateDimDeltaLogSightingsSlice.sql" />
+    <Build Include="dbo\Stored Procedures\prcUpdateDimDeltaLogLoadFlag.sql" />
+    <Build Include="dbo\Stored Procedures\prcUpdateDimDeltaLogAlertsSlice.sql" />
+    <Build Include="dbo\Stored Procedures\prcLoadVehicleSearchHistory.sql" />
+    <Build Include="dbo\Stored Procedures\prcLoadVehicleSearch.sql" />
+    <Build Include="dbo\Stored Procedures\prcGetHighWaterMarkSightingsSlice.sql" />
+    <Build Include="dbo\Stored Procedures\prcGetHighWaterMarkAlertsSlice.sql" />
   </ItemGroup>
 </Project>
