@@ -25,8 +25,8 @@ Try
     $lkn_SqlCmd.CommandType = [System.Data.CommandType]'StoredProcedure'
 
     # Stage
-    Invoke-Expression ($lkn_ScriptFolder + "LoadStageLastKnownLocation.ps1")
-     
+    Invoke-Expression ($lkn_ScriptFolder + "LoadStageLastKnownLocationCurrent.ps1")
+         
     # Upload model tables 
     Invoke-Expression ($lkn_ScriptFolder + "UploadLastKnownLocation.ps1")
 

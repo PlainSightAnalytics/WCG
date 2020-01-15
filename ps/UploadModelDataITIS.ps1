@@ -55,6 +55,7 @@ Try
                      "APP Target"
                     ,"Critical Outcome Type"
                     ,"Device"
+                    ,"Device Event"
                     ,"Impound Driver"
                     ,"Impound Instruction"
                     ,"Impound Traffic Control Event"
@@ -166,6 +167,7 @@ Try
     $modeltables = @(
                      "_Traffic Control Events"
                     ,"_Traffic Control Event Outcomes"
+                    ,"_Device History"
                    )
 
     foreach ($modeltable in $modeltables) {

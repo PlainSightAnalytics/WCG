@@ -1,17 +1,19 @@
 ﻿<# 
-Script:  UploadModelData.ps1
-Purpose: Uploads model data to Model Server and Database
+Script:  UploadVehicleSearch.ps1
+Purpose: Uploads Vehicle Search data from DW tables to App Server
 Author:  Trevor Howe
-Date:    17-03-2017
+Date:    07-12-2019
 #>
 
 
 # Declare Common Variables
-$schemaname = "model"
+$clientname = "WCG"
+$schemaname = "dbo"
+$objectname = "VehicleSearch"
 $executionlogkey = 0
 $scriptname =  $script:MyInvocation.MyCommand.Path
 $DeltaLogKey = 0
-$FirstDateKey = 20181130
+$UnloadedDeltas = @()
 
 Try 
 {
@@ -37,49 +39,90 @@ Try
     $ExecutionLogKey = $OutputParm.Value
 
     # Setup Destination Connection Information
-    
-    # Connection on PSA Server
-    $DestinationConnectionString = "Server=tcp:$pbiserver;Database=$pbidatabase;Uid=$pbiuserid;Pwd=$pbipwd;Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;"
+    $DestinationConnectionString = "Server=tcp:$appserver;Database=$appdatabase;Uid=$appuserid;Pwd=$apppwd;Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;"
+    #$DestinationConnectionString = "Server= $wcgserver ;Database= $pbidatabase ;Integrated Security=True"
     $DestinationConnection = New-Object System.Data.SqlClient.SqlConnection
     $DestinationConnection.ConnectionString = $DestinationConnectionString
     $DestinationConnection.Open()
+
+    # Setup Destination SQL Command
+    $DestinationSQLCmd = New-Object System.Data.SqlClient.SqlCommand
+    $DestinationSQLCmd.Connection = $DestinationConnection
+    $DestinationSQLCmd.CommandType = [System.Data.CommandType]'StoredProcedure'
 
     # Setup SQL Command for Source Select
     $SourceSQLCmd = New-Object System.Data.SqlClient.SqlCommand
     $SourceSQLCmd.Connection = $SourceConnection
     $SourceSQLCmd.CommandTimeout = 0
 
-    # Declare model tables to be copied - flush and load
-    $modeltables = @(
-                     "_Device History"
-                   )
+    # Get Unloaded Deltas
+    $SqlCmd.CommandText = "WCG_Stage.dbo.prcGetUnloadedDeltas"
+    $SqlCmd.Parameters.Clear()
+    $SqlCmd.Parameters.AddWithValue("@ClientName",$clientname)
+    $SqlCmd.Parameters.AddWithValue("@SchemaName",$schemaname)
+    $SqlCmd.Parameters.AddWithValue("@ObjectName",$objectname)
+    $SqlDataReader = $SqlCmd.ExecuteReader()
+    $SqlCmd.Parameters.Clear()
 
-    foreach ($modeltable in $modeltables) {
+    # For each unloaded Delta run Load Stored Procedure
+    while ($SqlDataReader.Read())
+    {
+        $DeltaLogKey = $SqlDataReader["DeltaLogKey"]
+        $UnloadedDeltas += $DeltaLogKey
+    }
 
-        # Setup SQL Command for table delete
-        $DestinationSQLCmd = New-Object System.Data.SqlClient.SqlCommand
-        $DestinationSQLCmd.Connection = $DestinationConnection
-        $DestinationSQLCmd.CommandText = "TRUNCATE TABLE [" + $schemaname + "].[" + $modeltable + "]"
+    $SqlDataReader.Close()
+
+    foreach ($DeltaLogKey in $UnloadedDeltas) {
+
+        # Drop Index
+        $DestinationSQLCmd.CommandText = "[dbo].[prcDropCreateVehicleSearchIndexes]"
+        $DestinationSQLCmd.Parameters.Clear()
+        $DestinationSQLCmd.Parameters.AddWithValue("@Action","Drop")
+        $DestinationSQLCmd.Parameters.AddWithValue("@Table","VehicleSearch")
         $DestinationSQLCmd.CommandTimeout = 0
         $DestinationSQLCmd.ExecuteNonQuery()
 
         # SQL Command for table select
         $SourceSQLCmd.CommandType = [System.Data.CommandType]'Text'
-        $SourceSQLCmd.CommandText = "SELECT * FROM [" + $schemaname + "].[" + $modeltable + "]"
+        $SourceSQLCmd.CommandText = "SELECT * FROM [WCG_DW].[dbo].[VehicleSearch] WHERE DeltaLogKey = " + $DeltaLogKey
 
         # Get source data
         [System.Data.SqlClient.SqlDataReader] $SqlReader = $SourceSQLCmd.ExecuteReader()
     
         # Bulk copy to destination
         $bulkCopy = New-Object Data.SqlClient.SqlBulkCopy($DestinationConnection)
-        
-        $bulkCopy.DestinationTableName = "[" + $schemaname + "].[" + $modeltable + "]"
+        $bulkCopy.DestinationTableName = "[dbo].[VehicleSearch]"
         $bulkcopy.BulkCopyTimeout = 0
         $bulkCopy.WriteToServer($SqlReader)
+
+        # Close and Dispose Objects
+        $bulkCopy.Close()
+        $bulkCopy.Dispose()
         $SqlReader.Close()
+        $SqlReader.Dispose()
+
+        # Recreate Index
+        $DestinationSQLCmd.CommandText = "[dbo].[prcDropCreateVehicleSearchIndexes]"
+        $DestinationSQLCmd.Parameters.Clear()
+        $DestinationSQLCmd.Parameters.AddWithValue("@Action","Create")
+        $DestinationSQLCmd.Parameters.AddWithValue("@Table","VehicleSearch")
+        $DestinationSQLCmd.CommandTimeout = 0
+        $DestinationSQLCmd.ExecuteNonQuery()
+
+        # Update LoadFlag to 1 (to indicate its been upoaded)
+        $SqlCmd.CommandText = "WCG_Stage.dbo.prcUpdateDimDeltaLogLoadFlag"
+        $SqlCmd.Parameters.Clear()
+        $SqlCmd.Parameters.AddWithValue("@DeltaLogKey",$DeltaLogKey)
+        $SqlCmd.ExecuteNonQuery()
 
     }
 
+    # Delete Vehicle Search Stage
+    $DestinationSQLCmd.CommandType = [System.Data.CommandType]'Text'
+    $DestinationSQLCmd.CommandText = "TRUNCATE TABLE [" + $schemaname + "].[VehicleSearchStage]"
+    $DestinationSQLCmd.CommandTimeout = 0
+    $DestinationSQLCmd.ExecuteNonQuery()
 
 }
 Catch

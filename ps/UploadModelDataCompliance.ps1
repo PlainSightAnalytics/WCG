@@ -38,8 +38,8 @@ Try
     # Setup Destination Connection Information
     
     # Connection on PSA Server
-    #$DestinationConnectionString = "Server=tcp:$pbiserver;Database=$pbidatabase;Uid=$pbiuserid;Pwd=$pbipwd;Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;"
-    $DestinationConnectionString = "Server= $wcgserver ;Database= $pbidatabase ;Integrated Security=True"
+    $DestinationConnectionString = "Server=tcp:$pbiserver;Database=$pbidatabase;Uid=$pbiuserid;Pwd=$pbipwd;Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;"
+    #$DestinationConnectionString = "Server= $wcgserver ;Database= $pbidatabase ;Integrated Security=True"
     $DestinationConnection = New-Object System.Data.SqlClient.SqlConnection
     $DestinationConnection.ConnectionString = $DestinationConnectionString
     $DestinationConnection.Open()
@@ -122,7 +122,7 @@ Try
 
     # Declare model tables to be copied - replace most recent deltas
     $modeltables = @(
-                     "_Monthly Fatigue Alerts"
+                     "_Monthly Flagged Alerts"
                     ,"_Monthly Alerts"
                     ,"_Monthly Sightings"
                     ,"_Monthly Traffic Control Events"
