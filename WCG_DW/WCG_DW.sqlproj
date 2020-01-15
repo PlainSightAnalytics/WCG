@@ -80,7 +80,6 @@
     <Build Include="dbo\Tables\DimAudit.sql" />
     <Build Include="dbo\Tables\FactFreightTracking.sql" />
     <Build Include="dbo\Tables\DimFlaggedVehicleTrip.sql" />
-    <Build Include="dbo\Tables\tempList.sql" />
     <Build Include="dbo\Tables\DimGeoLocation.sql" />
     <Build Include="dbo\Tables\DimEBATEvent.sql" />
     <Build Include="dbo\Tables\FactAPPActuals.sql" />
@@ -265,5 +264,19 @@
     <Build Include="model\Views\_Device History_2.sql" />
     <Build Include="dbo\Tables\DimGeographicalLocation.sql" />
     <Build Include="dbo\Tables\VehicleSearch.sql" />
+    <Build Include="dbo\Tables\FactOperationGeographicalLocation.sql" />
+    <Build Include="dbo\Tables\FactObjectListHistory.sql" />
+    <Build Include="dbo\Tables\FactExecutionLog.sql" />
+    <Build Include="dbo\Tables\DimScript.sql" />
+    <Build Include="dbo\Tables\DimOperation_WCG0118.sql" />
+    <Build Include="dbo\Tables\DimObject.sql" />
+    <Build Include="model\Views\Script.sql" />
+    <Build Include="model\Views\Schema Comparison.sql" />
+    <Build Include="model\Views\Object.sql" />
+    <Build Include="model\Views\_Schema Comparison.sql" />
+    <Build Include="model\Views\_Object List History.sql" />
+    <Build Include="model\Views\_Monthly Sightings Old.sql" />
+    <Build Include="model\Views\_Delta Log.sql" />
+    <Build Include="model\Views\_Audit Log.sql" />
   </ItemGroup>
 </Project>

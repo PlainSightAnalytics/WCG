@@ -1,11 +1,8 @@
 ﻿
-
-
-
 CREATE VIEW [model].[_Execution Log] AS 
 ------------------------------------------------------------------------------------------
 -- Author               :   Trevor Howe
--- Date Created         :   2019-06-14
+-- Date Created         :   20-12-2019
 -- Reason               :   Semantic View for dbo.DimExecutionLog
 -- Modified By          :
 -- Modified On          :
@@ -13,99 +10,52 @@ CREATE VIEW [model].[_Execution Log] AS
 ------------------------------------------------------------------------------------------
 
 WITH ExecutionLogCTE AS (
-	SELECT 
-		 ExecutionLogKey											AS ExecutionLogKey
-		,StartTime													AS StartTime
-		,EndTime													AS EndTime
-		,FORMAT(StartTime,'yyyyMMdd')								AS ExecutionDateKey
-		,FORMAT(StartTime,'HHmm')									AS ExecutionTimeKey
-		,ScriptName													AS ScriptName
-		,ExceptionLineNo											AS ExceptionLineNo
-		,ExceptionLine												AS ExceptionLine
-		,ExceptionMessage											AS ExceptionMessage
-		--,SUBSTRING(ScriptName,CHARINDEX('ps\',scriptname,1)+3,50)	AS ScriptNameOnly
-		,REPLACE(REPLACE(
-			CASE
-				WHEN CHARINDEX('\', ScriptName) > 0
-					THEN RIGHT(ScriptName, CHARINDEX('\', REVERSE(ScriptName)) -1)
-				ELSE ScriptName
-			END,'.ps1',''),'.p','')									AS ScriptNameOnly
-FROM DimExecutionLogWCG e WITH (NOLOCK)
-WHERE ScriptName LIKE '%ps\%'
-)
-
-,MasterCTE AS (
-	SELECT 
-		 e.StartTime											AS MasterScriptStartTime
-		,e.EndTime												AS MasterScriptEndTime
-		,DATEDIFF(SECOND,e.StartTime,e.EndTime)					AS MasterScriptDuration
-		,FORMAT(StartTime,'yyyyMMdd')							AS MasterScriptExecutionDateKey
-		,FORMAT(StartTime,'HHmm')								AS MasterScriptExecutionTimeKey
+SELECT
+	 FORMAT(StartTime,'yyyyMMdd')	AS ExecutionDateKey
+	,FORMAT(StartTime,'HHmm')		AS ExecutionTimeKey
+	,CASE
+		WHEN CHARINDEX('\', ScriptName) > 0
+			THEN RIGHT(ScriptName, CHARINDEX('\', REVERSE(ScriptName)) -1)
+		ELSE ScriptName
+	END									AS ScriptName
+	,ExecutionLogKey
+	,CASE	
+		WHEN ExceptionMessage IS NULL THEN NULL
+		ELSE CONCAT('Line: ',ExceptionLineNo,'. ',ExceptionLine,' Message: ',ExceptionMessage) 
+	END AS Exception
+	,StartTime
+	,EndTime
+	,DATEDIFF(
+		MINUTE
 		,CASE
-			WHEN ScriptName LIKE '%LoadMasterDaily%' 
-				THEN 'LoadMasterEBAT'
-			ELSE REPLACE(
-					SUBSTRING(
-						ScriptName
-						,CHARINDEX('ps\',scriptname,1)+3
-						,50
-					),'.ps1','') 
-		END														AS MasterScript
-		,DATEADD(
-			SECOND
-			,-1
-			,LEAD(StartTime) 
-				OVER (
-					PARTITION BY ScriptName 
-					ORDER BY StartTime)
-			)													AS NextStartTime
-FROM ExecutionLogCTE e 
-)
-
-,MasterCTE1 AS (
-	SELECT
-		 MasterScript											AS MasterScript
-		,REPLACE(MasterScript,'.ps1','') 
-		 + FORMAT(MasterScriptStartTime,'yyyyMMdd-') 
-		 + CAST((ROW_NUMBER() OVER (
-								PARTITION BY MasterScript, MasterScriptExecutionDateKey 
-								ORDER BY MasterScriptStartTime)) 
-				AS VARCHAR(3))									AS ExecutionBatch
-		,MasterScriptStartTime									AS MasterScriptStartTime
-		,ISNULL(MasterScriptEndTime,NextStartTime)				AS MasterScriptEndTime
-		,MasterScriptExecutionDateKey							AS MasterScriptExecutionDateKey
-		,MasterScriptExecutionTimeKey							AS MasterScriptExecutionTimeKey
-		,MasterScriptDuration									AS MasterScriptDuration
-	FROM MasterCTE
+			WHEN ROW_NUMBER() OVER (PARTITION BY ExecutionLogKey ORDER BY h.Hour24) = 1 THEN CAST(StartTime AS TIME)
+			ELSE TIMEFROMPARTS(h.Hour24,0,0,0,0)
+		END
+		,CASE
+			WHEN ROW_NUMBER() OVER (PARTITION BY ExecutionLogKey ORDER BY h.Hour24 DESC) = 1 THEN CAST(EndTime AS TIME)
+			ELSE TIMEFROMPARTS(h.Hour24 + 1,0,0,0,0)	
+		END
+		) AS Duration
+	,h.HourKey AS ExecutionHourKey
+	,DATEDIFF(MINUTE,StartTime, EndTime) AS DurationCheck
+FROM WCG_DW.dbo.DimExecutionLog e
+LEFT JOIN WCG_DW.dbo.DimHour h ON h.Hour24 >= FORMAT(e.StartTime,'HH') AND h.Hour24 <= FORMAT(e.EndTime,'HH')
+WHERE ScriptName <> ''
+AND EndTime IS NOT NULL
 )
 
 SELECT
-	 e.ExecutionLogKey											AS ExecutionLogKey
-	,e.ScriptNameOnly											AS ScriptName
-	,ISNULL(m.MasterScript,'Adhoc')								AS MasterScript
-	,e.StartTime												AS ScriptStartTime
-	,e.EndTime													AS ScriptEndTime
-	,CASE
-		WHEN m.MasterScript + '.ps1' = e.ScriptNameOnly THEN NULL
-		ELSE DATEDIFF(SECOND,e.StartTime,e.EndTime)						
-	END															AS ScriptDuration
-	,CAST(b.ExecutionBatch AS VARCHAR(100))						AS ExecutionBatch
-	,CASE
-		WHEN m.MasterScript + '.ps1' = e.ScriptNameOnly 
-			THEN b.MasterScriptDuration
-		ELSE NULL
-	END															AS MasterScriptDuration
-	,CAST(
-		ISNULL(
-			b.MasterScriptExecutionDateKey,e.ExecutionDateKey) 
-		AS INT)													AS MasterScriptExecutionDateKey
-	,CAST(
-		ISNULL(
-			b.MasterScriptExecutionTimeKey, e.ExecutionTimeKey) 
-		AS INT)													AS MasterScriptExecutionTimeKey
-	,CAST(e.ExceptionMessage AS VARCHAR(1000))					AS ExceptionMessage
+	 ExecutionDateKey
+	,ExecutionHourKey
+	,ExecutionTimeKey
+	,ISNULL(o.ObjectKey,-1) AS ObjectKey
+	,Exception
+	,ExecutionLogKey
+	,StartTime
+	,EndTime
+	,Duration
+	,ScriptName
 FROM ExecutionLogCTE e
-LEFT JOIN ScriptMapping m ON e.ScriptNameOnly = m.ScriptName AND e.StartTime BETWEEN m.StartDateTime AND m.EndDateTime
-LEFT JOIN MasterCTE1 b ON m.MasterScript = b.MasterScript AND e.StartTime BETWEEN b.MasterScriptStartTime AND b.MasterScriptEndTime
+LEFT JOIN WCG_DW.dbo.DimObject o ON e.ScriptName = o.ObjectName
 
 

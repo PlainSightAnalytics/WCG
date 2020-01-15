@@ -1,4 +1,5 @@
-﻿CREATE PROCEDURE [dbo].[prcGenerateObjectList]
+﻿
+CREATE PROCEDURE [dbo].[prcGenerateObjectList]
 
 --------------------------------------------------------------------------------------------------------------------------
 -- Author				:	Trevor Howe
@@ -33,9 +34,9 @@ DROP TABLE IF EXISTS tempList
 CREATE TABLE tempList (Files VARCHAR(500) collate SQL_Latin1_General_CP1_CI_AS, ObjectLocation VARCHAR(500) collate SQL_Latin1_General_CP1_CI_AS, FileDate VARCHAR(20) collate SQL_Latin1_General_CP1_CI_AS ) 
 
 INSERT INTO tempList (Files)
-EXEC MASTER..XP_CMDSHELL 'dir D:\PSA\WCG\PS'
+EXEC MASTER..XP_CMDSHELL 'dir D:\PSA\WCG\PS\*.ps1'
 
-UPDATE templist set ObjectLocation = 'D:\PSA\WCG\ps' where ObjectLocation IS NULL
+UPDATE templist set ObjectLocation = 'D:\WCG\ps' where ObjectLocation IS NULL
 
 --delete all directories
 DELETE tempList WHERE Files LIKE '%<dir>%'

@@ -188,5 +188,13 @@
     <Build Include="dbo\Stored Procedures\prcDropCreateVehicleSearchIndexes.sql" />
     <Build Include="model\Tables\Object List.sql" />
     <Build Include="model\Views\vwObjectList.sql" />
+    <Build Include="model\Tables\Script.sql" />
+    <Build Include="model\Tables\Schema Comparison.sql" />
+    <Build Include="model\Tables\Object.sql" />
+    <Build Include="model\Tables\_Schema Comparison.sql" />
+    <Build Include="model\Tables\_Object List History.sql" />
+    <Build Include="model\Tables\_Execution Log Old.sql" />
+    <Build Include="model\Tables\_Delta Log.sql" />
+    <Build Include="model\Tables\_Audit Log.sql" />
   </ItemGroup>
 </Project>

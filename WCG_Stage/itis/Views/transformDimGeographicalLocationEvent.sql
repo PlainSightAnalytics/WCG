@@ -1,5 +1,6 @@
 ﻿
 
+
 CREATE VIEW [itis].[transformDimGeographicalLocationEvent] AS
 
 --------------------------------------------------------------------------------------------------------------------------------------
@@ -18,12 +19,18 @@ SELECT
 	,CAST('EVENT' AS VARCHAR(20))									AS Source
 	,CAST(gps_location_latitude AS NUMERIC(11,2))					AS [LatitudeRange]
 	,CAST(gps_location_longitude AS NUMERIC(11,2))					AS [LongitudeRange]
-	,CAST(gps_location_latitude AS NUMERIC(11,6))					AS [Latitude]
-	,CAST(gps_location_longitude AS NUMERIC(11,6))					AS [Longitude]
+	,CAST(gps_location_latitude AS NUMERIC(11,2))					AS [Latitude]
+	,CAST(gps_location_longitude AS NUMERIC(11,2))					AS [Longitude]
+--	,CAST(ROUND(gps_location_latitude,2) AS NUMERIC(11,2))			AS [Latitude]
+--	,CAST(ROUND(gps_location_longitude,2) AS NUMERIC(11,2))			AS [Longitude]
 	,ROW_NUMBER() OVER (PARTITION BY 
-							CAST(gps_location_latitude AS NUMERIC(11,6)), 
-							CAST(gps_location_longitude AS NUMERIC(11,6))
+							CAST(gps_location_latitude AS NUMERIC(11,2)), 
+							CAST(gps_location_longitude AS NUMERIC(11,2))
+							--CAST(ROUND(gps_location_latitude,2) AS NUMERIC(11,2)), 
+							--CAST(ROUND(gps_location_longitude,2) AS NUMERIC(11,2))
 						ORDER BY updated_at DESC)					AS [RowSequence]
 	,DeltaLogKey
 FROM [WCG_Stage].[itis].[event]
 WHERE gps_location_latitude IS NOT NULL
+AND CAST(gps_location_latitude AS NUMERIC(19,2)) BETWEEN 10 AND 40
+AND	CAST(gps_location_latitude AS NUMERIC(19,2)) BETWEEN -40 AND -10

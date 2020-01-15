@@ -96,6 +96,7 @@
     <Folder Include="its\Stored Procedures\" />
     <Folder Include="meta\" />
     <Folder Include="meta\Views\" />
+    <Folder Include="meta\Tables\" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="man\Tables\CameraLookup.sql" />
@@ -107,7 +108,6 @@
     <Build Include="itis\Tables\section56_form.sql" />
     <Build Include="cle\Tables\VehicleEnquiryResponses.sql" />
     <Build Include="itis\Tables\impound.sql" />
-    <Build Include="dbo\Tables\tempList.sql" />
     <Build Include="itis\Tables\vehicle.sql" />
     <Build Include="man\Tables\FIOCNOTICES.sql" />
     <Build Include="man\Tables\DRUGENFORCEMENT.sql" />
@@ -520,5 +520,23 @@
     <Build Include="meta\Views\JourneyTablesColumnsAudit_1.sql" />
     <Build Include="dbo\Stored Procedures\prcGenerateObjectList.sql" />
     <Build Include="Security\meta_1.sql" />
+    <Build Include="meta\Tables\PSScripts.sql" />
+    <Build Include="meta\Tables\PSChildScripts.sql" />
+    <Build Include="itis\Tables\site_WCG0120.sql" />
+    <Build Include="itis\Tables\operation_WCG0120.sql" />
+    <Build Include="itis\Tables\last_known_location_pre201904.sql" />
+    <Build Include="itis\Tables\camera_site_WCG0120.sql" />
+    <Build Include="dbo\Tables\conformFactOperationGeographicalLocation.sql" />
+    <Build Include="dbo\Tables\ConformDimObject.sql" />
+    <Build Include="meta\Views\transformDimScript.sql" />
+    <Build Include="meta\Views\transformDimObject.sql" />
+    <Build Include="meta\Views\SQLObjectList.sql" />
+    <Build Include="itis\Views\transformFactOperationGeographicalLocationSingleLocation.sql" />
+    <Build Include="itis\Views\transformFactOperationGeographicalLocationMultipleLocations.sql" />
+    <Build Include="itis\Views\transformFactOperationGeographicalLocationASODLocations.sql" />
+    <Build Include="dbo\Views\LoadFactObjectListHistory.sql" />
+    <Build Include="dbo\Stored Procedures\prcLoadFactObjectListHistory.sql" />
+    <Build Include="dbo\Stored Procedures\prcLoadDimScript.sql" />
+    <Build Include="dbo\Stored Procedures\prcLoadDimObject.sql" />
   </ItemGroup>
 </Project>

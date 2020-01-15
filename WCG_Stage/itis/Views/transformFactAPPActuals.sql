@@ -1,5 +1,6 @@
 ﻿
 
+
 CREATE VIEW [itis].[transformFactAPPActuals] AS
 
 --------------------------------------------------------------------------------------------------------------------------------------
@@ -11,13 +12,17 @@ CREATE VIEW [itis].[transformFactAPPActuals] AS
 -- Modified On			:	18-08-2018
 -- Reason				:	Added Comments (Combined TC and Verifier comments into one field)
 --------------------------------------------------------------------------------------------------------------------------------------
+-- Modified By			:	Trevor Howe
+-- Modified On			:	07-02-2020
+-- Reason				:	Replaced source for PreliminaryActual (was preliminary_actual now preliminary_actual_total)
+--------------------------------------------------------------------------------------------------------------------------------------
 
 SELECT
 	 app_target_id							AS APPTargetGUID
 	,traffic_centre_id						AS TrafficCentreGUID
 	,EOMONTH(DATEFROMPARTS(year,number,1))	AS ActualDate
 	,a.id									AS UniqueGUID
-	,preliminary_actual						AS PreliminaryActual
+	,preliminary_actual_total				AS PreliminaryActual
 	,verified_actual						AS VerifiedActual
 	,NULLIF(CONCAT(
 		a.tc_comment

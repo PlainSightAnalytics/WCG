@@ -11,3 +11,10 @@
     [OperationKey]      INT          NOT NULL
 );
 
+
+
+
+GO
+CREATE CLUSTERED INDEX [idxOperationsDateKey]
+    ON [model].[_Operation Sightings]([OperationsDateKey] ASC);
+
